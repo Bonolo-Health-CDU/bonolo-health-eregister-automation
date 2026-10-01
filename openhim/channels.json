@@ -65,11 +65,11 @@
   },
   {
     "name": "INT-02 Repository read - eRegister, CDU",
-    "description": "Read access to the prescription repository: CDU pulls work, eRegister reads status back.",
+    "description": "Read access to the prescription repository: CDU pulls work, eRegister reads status back, the repository portal views data (read-only).",
     "urlPattern": "^/fhir(/.*)?$",
     "methods": ["GET"],
     "priority": 10,
-    "allow": ["cdu", "eregister", "registry"],
+    "allow": ["cdu", "eregister", "registry", "portal"],
     "authType": "private",
     "type": "http",
     "status": "enabled",

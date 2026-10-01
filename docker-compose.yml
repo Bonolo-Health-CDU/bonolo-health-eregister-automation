@@ -66,12 +66,14 @@ services:
       retries: 10
 
   hapi-fhir:
-    image: hapiproject/hapi:v8.12.0-1
+    image: bonolo/hapi:8.12.0-1-ig-validation
+    build: ./hapi
     restart: unless-stopped
     depends_on:
       hapi-db:
         condition: service_healthy
     environment:
+      SPRING_CONFIG_ADDITIONAL_LOCATION: file:/app/config/application-bonolo.yaml
       spring.datasource.url: jdbc:postgresql://hapi-db:5432/hapi
       spring.datasource.username: hapi
       spring.datasource.password: ${HAPI_DB_PASSWORD:-hapi}
@@ -82,6 +84,9 @@ services:
       hapi.fhir.server_address: http://localhost:5001/fhir/
       hapi.fhir.client_id_strategy: ALPHANUMERIC
       JAVA_TOOL_OPTIONS: -Xms256m -Xmx1g
+    volumes:
+      - ./igs:/app/igs:ro
+      - ./hapi/application-bonolo.yaml:/app/config/application-bonolo.yaml:ro
     ports:
       - "8095:8080"   # direct access, debugging only
     # No healthcheck: the HAPI image is distroless (no shell, curl or wget).

@@ -204,20 +204,20 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Organization/fac-demo-001",
+              "raw": "{{base}}/Organization/DEMO-FAC-001",
               "host": [
                 "{{base}}"
               ],
               "path": [
                 "Organization",
-                "fac-demo-001"
+                "DEMO-FAC-001"
               ],
               "query": []
             },
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"fac-demo-001\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code\",\n      \"value\": \"DEMO-FAC-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Health facility\"\n    }\n  ],\n  \"name\": \"Demo Health Centre (Maseru)\",\n  \"address\": [\n    {\n      \"district\": \"Maseru\",\n      \"country\": \"LS\"\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"DEMO-FAC-001\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"http://fhir.health.gov.ls/sid/dhis2-org-unit\",\n      \"value\": \"DEMO-FAC-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Health facility\"\n    }\n  ],\n  \"name\": \"Demo Health Centre (Maseru)\",\n  \"address\": [\n    {\n      \"district\": \"Maseru\",\n      \"country\": \"LS\"\n    }\n  ]\n}"
             }
           },
           "event": [
@@ -247,20 +247,20 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Organization/cdu-bonolo",
+              "raw": "{{base}}/Organization/DEMO-CDU-001",
               "host": [
                 "{{base}}"
               ],
               "path": [
                 "Organization",
-                "cdu-bonolo"
+                "DEMO-CDU-001"
               ],
               "query": []
             },
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"cdu-bonolo\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code\",\n      \"value\": \"DEMO-CDU-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Central Dispensing Unit\"\n    }\n  ],\n  \"name\": \"Bonolo Health Central Dispensing Unit\"\n}"
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"DEMO-CDU-001\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"http://fhir.health.gov.ls/sid/dhis2-org-unit\",\n      \"value\": \"DEMO-CDU-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Central Dispensing Unit\"\n    }\n  ],\n  \"name\": \"Bonolo Health Central Dispensing Unit\"\n}"
             }
           },
           "event": [
@@ -290,20 +290,20 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Location/pp-maseru-mall",
+              "raw": "{{base}}/Location/pup-CG-DEMO-MSU-01",
               "host": [
                 "{{base}}"
               ],
               "path": [
                 "Location",
-                "pp-maseru-mall"
+                "pup-CG-DEMO-MSU-01"
               ],
               "query": []
             },
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-maseru-mall\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Maseru Mall Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pup-CG-DEMO-MSU-01\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"http://fhir.health.gov.ls/sid/pickup-point-code\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Maseru Mall Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/pickup-type\",\n          \"code\": \"e-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
             }
           },
           "event": [
@@ -333,106 +333,20 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Location/pp-mafeteng-hosp",
+              "raw": "{{base}}/Location/pup-CG-DEMO-MFT-01",
               "host": [
                 "{{base}}"
               ],
               "path": [
                 "Location",
-                "pp-mafeteng-hosp"
+                "pup-CG-DEMO-MFT-01"
               ],
               "query": []
             },
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-mafeteng-hosp\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MFT-01\"\n    }\n  ],\n  \"name\": \"Mafeteng Hospital Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Mafeteng\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "PUT ART regimen CodeSystem",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/fhir+json"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/fhir+json"
-              }
-            ],
-            "url": {
-              "raw": "{{base}}/CodeSystem/art-regimen",
-              "host": [
-                "{{base}}"
-              ],
-              "path": [
-                "CodeSystem",
-                "art-regimen"
-              ],
-              "query": []
-            },
-            "description": "",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"CodeSystem\",\n  \"id\": \"art-regimen\",\n  \"url\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n  \"status\": \"draft\",\n  \"content\": \"fragment\",\n  \"name\": \"ArtRegimen\",\n  \"title\": \"ART regimen codes (demo fragment)\",\n  \"description\": \"Placeholder until the Pharmacy Directorate publishes the regimen list (see DE-23).\",\n  \"concept\": [\n    {\n      \"code\": \"DEMO-TLD\",\n      \"display\": \"TDF/3TC/DTG (demo code)\"\n    },\n    {\n      \"code\": \"DEMO-ABC-3TC-DTG\",\n      \"display\": \"ABC/3TC/DTG (demo code)\"\n    }\n  ]\n}"
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "type": "text/javascript",
-                "exec": [
-                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "name": "PUT CDU fulfilment status CodeSystem",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/fhir+json"
-              },
-              {
-                "key": "Content-Type",
-                "value": "application/fhir+json"
-              }
-            ],
-            "url": {
-              "raw": "{{base}}/CodeSystem/cdu-fulfilment-status",
-              "host": [
-                "{{base}}"
-              ],
-              "path": [
-                "CodeSystem",
-                "cdu-fulfilment-status"
-              ],
-              "query": []
-            },
-            "description": "",
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"CodeSystem\",\n  \"id\": \"cdu-fulfilment-status\",\n  \"url\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n  \"status\": \"draft\",\n  \"content\": \"complete\",\n  \"name\": \"CduFulfilmentStatus\",\n  \"title\": \"CDU fulfilment status\",\n  \"description\": \"Task.businessStatus codes published by the CDU (workbook 'Status Map').\",\n  \"concept\": [\n    {\n      \"code\": \"received\",\n      \"display\": \"Received\"\n    },\n    {\n      \"code\": \"query-raised\",\n      \"display\": \"Query raised\"\n    },\n    {\n      \"code\": \"returned-to-facility\",\n      \"display\": \"Returned to facility\"\n    },\n    {\n      \"code\": \"in-preparation\",\n      \"display\": \"In preparation\"\n    },\n    {\n      \"code\": \"ready-for-dispatch\",\n      \"display\": \"Ready for dispatch\"\n    },\n    {\n      \"code\": \"dispatched\",\n      \"display\": \"Dispatched\"\n    },\n    {\n      \"code\": \"collected\",\n      \"display\": \"Collected\"\n    },\n    {\n      \"code\": \"uncollected-returned\",\n      \"display\": \"Returned uncollected\"\n    },\n    {\n      \"code\": \"cancelled\",\n      \"display\": \"Cancelled\"\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pup-CG-DEMO-MFT-01\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"http://fhir.health.gov.ls/sid/pickup-point-code\",\n      \"value\": \"CG-DEMO-MFT-01\"\n    }\n  ],\n  \"name\": \"Mafeteng Hospital Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/pickup-type\",\n          \"code\": \"e-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Mafeteng\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
             }
           },
           "event": [
@@ -493,7 +407,7 @@
             "description": "INT-01. One Bonolo encounter in eRegister -> Patient + AllergyIntolerance + MedicationRequest + Task, posted atomically. Conditional create on identifiers makes the call idempotent (DE-01). Each send generates a NEW prescription.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
             }
           },
           "event": [
@@ -564,7 +478,7 @@
             "description": "Re-sends the exact same bundle, as the 15-minute sweep or a retry would. Nothing is duplicated.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
             }
           },
           "event": [
@@ -597,7 +511,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/MedicationRequest?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_summary=count",
+              "raw": "{{base}}/MedicationRequest?identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}&_summary=count",
               "host": [
                 "{{base}}"
               ],
@@ -607,7 +521,7 @@
               "query": [
                 {
                   "key": "identifier",
-                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                  "value": "http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}"
                 },
                 {
                   "key": "_summary",
@@ -661,7 +575,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Task?owner=Organization/cdu-bonolo&status=requested&_include=Task:focus&_include=Task:patient&_sort=authored-on&_count=50",
+              "raw": "{{base}}/Task?owner=Organization/DEMO-CDU-001&status=requested&_include=Task:focus&_include=Task:patient&_sort=authored-on&_count=50",
               "host": [
                 "{{base}}"
               ],
@@ -671,7 +585,7 @@
               "query": [
                 {
                   "key": "owner",
-                  "value": "Organization/cdu-bonolo"
+                  "value": "Organization/DEMO-CDU-001"
                 },
                 {
                   "key": "status",
@@ -726,7 +640,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/MedicationRequest?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_include=MedicationRequest:patient",
+              "raw": "{{base}}/MedicationRequest?identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}&_include=MedicationRequest:patient",
               "host": [
                 "{{base}}"
               ],
@@ -736,7 +650,7 @@
               "query": [
                 {
                   "key": "identifier",
-                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                  "value": "http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}"
                 },
                 {
                   "key": "_include",
@@ -769,7 +683,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Patient?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}",
+              "raw": "{{base}}/Patient?identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}",
               "host": [
                 "{{base}}"
               ],
@@ -779,7 +693,7 @@
               "query": [
                 {
                   "key": "identifier",
-                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}"
+                  "value": "http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}"
                 }
               ]
             },
@@ -927,7 +841,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Organization?identifier=https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code|DEMO-FAC-001",
+              "raw": "{{base}}/Organization?identifier=http://fhir.health.gov.ls/sid/dhis2-org-unit|DEMO-FAC-001",
               "host": [
                 "{{base}}"
               ],
@@ -937,7 +851,7 @@
               "query": [
                 {
                   "key": "identifier",
-                  "value": "https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code|DEMO-FAC-001"
+                  "value": "http://fhir.health.gov.ls/sid/dhis2-org-unit|DEMO-FAC-001"
                 }
               ]
             },
@@ -1004,7 +918,7 @@
             "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"accepted\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"received\",\n          \"display\": \"Received\"\n        }\n      ],\n      \"text\": \"Received\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"accepted\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"received\",\n          \"display\": \"Received\"\n        }\n      ],\n      \"text\": \"Received\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
             }
           },
           "event": [
@@ -1061,7 +975,7 @@
             "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"in-preparation\",\n          \"display\": \"In preparation\"\n        }\n      ],\n      \"text\": \"In preparation\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"in-preparation\",\n          \"display\": \"In preparation\"\n        }\n      ],\n      \"text\": \"In preparation\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
             }
           },
           "event": [
@@ -1117,7 +1031,7 @@
             "description": "DE-39. Product, quantity and days' supply. Lot and expiry would go on a contained Medication.batch.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n        \"code\": \"DEMO-TLD\",\n        \"display\": \"TDF/3TC/DTG (demo code)\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/cdu-bonolo\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pp-maseru-mall\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n        \"code\": \"1j\",\n        \"display\": \"TDF-3TC-DTG\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/DEMO-CDU-001\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
             }
           },
           "event": [
@@ -1170,7 +1084,7 @@
             "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"dispatched\",\n          \"display\": \"Dispatched\"\n        }\n      ],\n      \"text\": \"Dispatched\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"dispatched\",\n          \"display\": \"Dispatched\"\n        }\n      ],\n      \"text\": \"Dispatched\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
             }
           },
           "event": [
@@ -1227,7 +1141,7 @@
             "description": "Collection status arrives at the CDU from Collect & Go and is republished on the same Task.",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"completed\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"collected\",\n          \"display\": \"Collected\"\n        }\n      ],\n      \"text\": \"Collected\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"completed\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"collected\",\n          \"display\": \"Collected\"\n        }\n      ],\n      \"text\": \"Collected\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
             }
           },
           "event": [
@@ -1339,7 +1253,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Task?requester=Organization/fac-demo-001&status:not=completed&status:not=cancelled&_count=50",
+              "raw": "{{base}}/Task?requester=Organization/DEMO-FAC-001&status:not=completed&status:not=cancelled&_count=50",
               "host": [
                 "{{base}}"
               ],
@@ -1349,7 +1263,7 @@
               "query": [
                 {
                   "key": "requester",
-                  "value": "Organization/fac-demo-001"
+                  "value": "Organization/DEMO-FAC-001"
                 },
                 {
                   "key": "status:not",
@@ -1425,7 +1339,7 @@
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
             },
             "auth": {
               "type": "basic",
@@ -1482,7 +1396,7 @@
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n        \"code\": \"DEMO-TLD\",\n        \"display\": \"TDF/3TC/DTG (demo code)\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/cdu-bonolo\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pp-maseru-mall\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n        \"code\": \"1j\",\n        \"display\": \"TDF-3TC-DTG\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/DEMO-CDU-001\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
             },
             "auth": {
               "type": "basic",
@@ -1527,20 +1441,20 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Location/pp-maseru-mall",
+              "raw": "{{base}}/Location/pup-CG-DEMO-MSU-01",
               "host": [
                 "{{base}}"
               ],
               "path": [
                 "Location",
-                "pp-maseru-mall"
+                "pup-CG-DEMO-MSU-01"
               ],
               "query": []
             },
             "description": "",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-maseru-mall\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Hijacked\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pup-CG-DEMO-MSU-01\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"http://fhir.health.gov.ls/sid/pickup-point-code\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Hijacked\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/pickup-type\",\n          \"code\": \"e-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
             },
             "auth": {
               "type": "basic",
@@ -1702,7 +1616,7 @@
             "description": "INT-01. One Bonolo encounter in eRegister -> Patient + AllergyIntolerance + MedicationRequest + Task, posted atomically. Conditional create on identifiers makes the call idempotent (DE-01). Each send generates a NEW prescription.",
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
             }
           },
           "event": [
@@ -1819,7 +1733,7 @@
             "description": "... so it drops out of the CDU work queue.",
             "body": {
               "mode": "raw",
-              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"cancelled\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"cancelled\",\n          \"display\": \"Cancelled\"\n        }\n      ],\n      \"text\": \"Cancelled\"\n    }\n  }\n]"
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"cancelled\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"cancelled\",\n          \"display\": \"Cancelled\"\n        }\n      ],\n      \"text\": \"Cancelled\"\n    }\n  }\n]"
             }
           },
           "event": [
@@ -1845,7 +1759,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Task?owner=Organization/cdu-bonolo&status=requested&identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_summary=count",
+              "raw": "{{base}}/Task?owner=Organization/DEMO-CDU-001&status=requested&identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}&_summary=count",
               "host": [
                 "{{base}}"
               ],
@@ -1855,7 +1769,7 @@
               "query": [
                 {
                   "key": "owner",
-                  "value": "Organization/cdu-bonolo"
+                  "value": "Organization/DEMO-CDU-001"
                 },
                 {
                   "key": "status",
@@ -1863,7 +1777,7 @@
                 },
                 {
                   "key": "identifier",
-                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                  "value": "http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}"
                 },
                 {
                   "key": "_summary",
@@ -1901,6 +1815,432 @@
           ]
         }
       ]
+    },
+    {
+      "name": "08 Contract validation (expected failures)",
+      "item": [
+        {
+          "name": "Reject prescription without pickup-point",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Fresh synthetic transaction; exactly one contract violation. An accepted write must fail this test.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Contract violation rejected (400 or 422)', () => pm.expect(pm.response.code).to.be.oneOf([400, 422]));",
+                  "pm.test('OperationOutcome diagnostics identify the contract violation', () => {",
+                  "  const outcome = pm.response.json();",
+                  "  pm.expect(outcome.resourceType).to.eql('OperationOutcome');",
+                  "  const errors = (outcome.issue || []).filter(i => ['error', 'fatal'].includes(i.severity));",
+                  "  pm.expect(errors.length).to.be.above(0);",
+                  "  pm.expect(errors.map(i => i.diagnostics || '').join('\\n')).to.match(/pickupPoint|pickup-point/i);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reject regimen ZZ",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Fresh synthetic transaction; exactly one contract violation. An accepted write must fail this test.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"ZZ\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Contract violation rejected (400 or 422)', () => pm.expect(pm.response.code).to.be.oneOf([400, 422]));",
+                  "pm.test('OperationOutcome diagnostics identify the contract violation', () => {",
+                  "  const outcome = pm.response.json();",
+                  "  pm.expect(outcome.resourceType).to.eql('OperationOutcome');",
+                  "  const errors = (outcome.issue || []).filter(i => ['error', 'fatal'].includes(i.severity));",
+                  "  pm.expect(errors.length).to.be.above(0);",
+                  "  pm.expect(errors.map(i => i.diagnostics || '').join('\\n')).to.match(/ZZ/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reject Patient without eRegister identifier",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Fresh synthetic transaction; exactly one contract violation. An accepted write must fail this test.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Contract violation rejected (400 or 422)', () => pm.expect(pm.response.code).to.be.oneOf([400, 422]));",
+                  "pm.test('OperationOutcome diagnostics identify the contract violation', () => {",
+                  "  const outcome = pm.response.json();",
+                  "  pm.expect(outcome.resourceType).to.eql('OperationOutcome');",
+                  "  const errors = (outcome.issue || []).filter(i => ['error', 'fatal'].includes(i.severity));",
+                  "  pm.expect(errors.length).to.be.above(0);",
+                  "  pm.expect(errors.map(i => i.diagnostics || '').join('\\n')).to.match(/identifier.*eRegister|eregister-id/i);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reject MedicationRequest without meta.profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Fresh synthetic transaction; exactly one contract violation. An accepted write must fail this test.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Contract violation rejected (400 or 422)', () => pm.expect(pm.response.code).to.be.oneOf([400, 422]));",
+                  "pm.test('OperationOutcome diagnostics identify the contract violation', () => {",
+                  "  const outcome = pm.response.json();",
+                  "  pm.expect(outcome.resourceType).to.eql('OperationOutcome');",
+                  "  const errors = (outcome.issue || []).filter(i => ['error', 'fatal'].includes(i.severity));",
+                  "  pm.expect(errors.length).to.be.above(0);",
+                  "  pm.expect(errors.map(i => i.diagnostics || '').join('\\n')).to.match(/bonolo-medication-request/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Publish valid prescription for CDU claim validation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Creates a separate requested Task without businessStatus for the following positive PATCH.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ],\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-patient\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/DEMO-FAC-001\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pup-CG-DEMO-MSU-01\"\n            }\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/art-regimen\",\n              \"code\": \"1j\",\n              \"display\": \"TDF-3TC-DTG\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/bonolo-medication-request\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"http://fhir.health.gov.ls/sid/cdu-fulfilment-task\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/DEMO-FAC-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/DEMO-CDU-001\"\n        },\n        \"meta\": {\n          \"profile\": [\n            \"http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task\"\n          ]\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200 transaction-response', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().type).to.eql('transaction-response');",
+                  "});",
+                  "const idOf = i => pm.response.json().entry[i].response.location.split('/')[1];",
+                  "pm.collectionVariables.set('patientId', idOf(0));",
+                  "pm.collectionVariables.set('mrId', idOf(2));",
+                  "pm.collectionVariables.set('taskId', idOf(3));",
+                  "pm.test('Patient, MedicationRequest and Task created (201)', () => {",
+                  "  const s = pm.response.json().entry.map(e => e.response.status);",
+                  "  pm.expect(s[0]).to.match(/^20[01]/);   // patient may already exist",
+                  "  pm.expect(s[2]).to.match(/^201/);",
+                  "  pm.expect(s[3]).to.match(/^201/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Accept CDU-claimed Task shape via PATCH",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"accepted\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"http://fhir.health.gov.ls/bonolo-cdu/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"received\",\n          \"display\": \"Received\"\n        }\n      ],\n      \"text\": \"Received\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{cduUser}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{cduPassword}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task is accepted / received', () => {",
+                  "  const t = pm.response.json();",
+                  "  pm.expect(t.status).to.eql('accepted');",
+                  "  pm.expect(t.businessStatus.coding[0].code).to.eql('received');",
+                  "});",
+                  "pm.test('Claimed Task still declares the contract profile', () => {",
+                  "  pm.expect(pm.response.json().meta.profile).to.include('http://fhir.health.gov.ls/bonolo-cdu/StructureDefinition/cdu-fulfilment-task');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{eregisterUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{eregisterPassword}}",
+            "type": "string"
+          }
+        ]
+      }
     }
   ]
 }

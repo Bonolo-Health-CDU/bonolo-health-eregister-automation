@@ -1,6 +1,8 @@
 # Bonolo Health CDU <-> eRegister prescription repository (demo stack)
 #
 #   eRegister / CDU (Postman) --> OpenHIM :5001 --> HAPI FHIR R4 --> PostgreSQL
+#   Admin browser --> Portal :3000 --(read-only client)--> OpenHIM :5001
+#                        `--> Keycloak :8180 (portal users and roles)
 #
 # OpenHIM is the only entry point clients should use. HAPI is published on
 # :8095 for debugging only.
@@ -91,6 +93,101 @@ services:
       - "8095:8080"   # direct access, debugging only
     # No healthcheck: the HAPI image is distroless (no shell, curl or wget).
 
+  keycloak-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?}
+    volumes:
+      - keycloak-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keycloak -d keycloak"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.4
+    restart: unless-stopped
+    # Imports the realm on first start only; later edits to the JSON are not
+    # re-applied (change them in the Keycloak admin console instead).
+    command: ["start", "--import-realm"]
+    depends_on:
+      keycloak-db:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD:?}
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?}
+      # Browsers use the public URL; the portal reaches Keycloak at keycloak:8080.
+      KC_HOSTNAME: http://localhost:8180
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+      KC_HTTP_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      # Placeholders in the realm import
+      PORTAL_PUBLIC_URL: http://localhost:3000
+      PORTAL_CLIENT_SECRET: ${PORTAL_CLIENT_SECRET:?}
+      PORTAL_ADMIN_CLIENT_SECRET: ${PORTAL_ADMIN_CLIENT_SECRET:?}
+      PORTAL_DEMO_ADMIN_PASSWORD: ${PORTAL_DEMO_ADMIN_PASSWORD:?}
+      PORTAL_DEMO_MANAGER_PASSWORD: ${PORTAL_DEMO_MANAGER_PASSWORD:?}
+      PORTAL_DEMO_SUPPORT_PASSWORD: ${PORTAL_DEMO_SUPPORT_PASSWORD:?}
+    volumes:
+      - ./keycloak/bonolo-repository-realm.json:/opt/keycloak/data/import/bonolo-repository-realm.json:ro
+    ports:
+      - "8180:8080"   # login pages and admin console (admin / KEYCLOAK_ADMIN_PASSWORD)
+    healthcheck:
+      # No curl in the image; ask the management port for readiness over bash.
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q UP <&3"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  portal:
+    image: bonolo/repository-portal:dev
+    build: ./portal
+    restart: unless-stopped
+    depends_on:
+      keycloak:
+        condition: service_healthy
+      openhim-core:
+        condition: service_healthy
+    environment:
+      PORTAL_PUBLIC_URL: http://localhost:3000
+      PORTAL_SESSION_SECRET: ${PORTAL_SESSION_SECRET:?}
+      KEYCLOAK_PUBLIC_URL: http://localhost:8180
+      KEYCLOAK_INTERNAL_URL: http://keycloak:8080
+      KEYCLOAK_REALM: bonolo-repository
+      KEYCLOAK_CLIENT_ID: repository-portal
+      KEYCLOAK_CLIENT_SECRET: ${PORTAL_CLIENT_SECRET:?}
+      # Service account for the Users page (view-users, query-users, manage-users).
+      KEYCLOAK_ADMIN_CLIENT_ID: repository-portal-admin
+      KEYCLOAK_ADMIN_CLIENT_SECRET: ${PORTAL_ADMIN_CLIENT_SECRET:?}
+      # Read-only OpenHIM client; every read is logged against it in OpenHIM.
+      FHIR_BASE_URL: http://openhim-core:5001/fhir
+      OPENHIM_CLIENT_ID: portal
+      OPENHIM_CLIENT_PASSWORD: ${PORTAL_PASSWORD:?}
+      # Read-only OpenHIM API user (role portal-monitor) for integration health.
+      OPENHIM_API_URL: https://openhim-core:8080
+      OPENHIM_API_USER: ${OPENHIM_PORTAL_USER:?}
+      OPENHIM_API_PASSWORD: ${OPENHIM_PORTAL_USER_PASSWORD:?}
+      # The demo OpenHIM uses a self-signed certificate. In production mount its
+      # CA and set OPENHIM_API_CA_FILE instead.
+      OPENHIM_API_INSECURE_TLS: "true"
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
 volumes:
   mongo-data:
   hapi-db-data:
+  keycloak-db-data:

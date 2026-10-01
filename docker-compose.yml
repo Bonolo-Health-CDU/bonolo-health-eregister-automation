@@ -1,0 +1,91 @@
+# Bonolo Health CDU <-> eRegister prescription repository (demo stack)
+#
+#   eRegister / CDU (Postman) --> OpenHIM :5001 --> HAPI FHIR R4 --> PostgreSQL
+#
+# OpenHIM is the only entry point clients should use. HAPI is published on
+# :8095 for debugging only.
+
+name: cdu-fhir-repo
+
+services:
+  mongo:
+    image: mongo:4.4
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  openhim-core:
+    image: jembi/openhim-core:v8.5.1
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      mongo_url: mongodb://mongo/openhim
+      mongo_atnaUrl: mongodb://mongo/openhim
+      api_authenticationTypes: '["local","basic","token"]'
+      router_externalHostname: localhost
+    ports:
+      - "8080:8080"   # management API (https, self-signed)
+      - "5000:5000"   # router https
+      - "5001:5001"   # router http  <-- Postman talks to this
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- --no-check-certificate https://127.0.0.1:8080/heartbeat || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  openhim-console:
+    image: jembi/openhim-console:v1.18.2
+    restart: unless-stopped
+    depends_on:
+      - openhim-core
+    volumes:
+      - ./openhim/console-config.json:/usr/share/nginx/html/config/default.json:ro
+    ports:
+      - "9000:80"
+
+  hapi-db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hapi
+      POSTGRES_USER: hapi
+      POSTGRES_PASSWORD: ${HAPI_DB_PASSWORD:-hapi}
+    volumes:
+      - hapi-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapi -d hapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  hapi-fhir:
+    image: hapiproject/hapi:v8.12.0-1
+    restart: unless-stopped
+    depends_on:
+      hapi-db:
+        condition: service_healthy
+    environment:
+      spring.datasource.url: jdbc:postgresql://hapi-db:5432/hapi
+      spring.datasource.username: hapi
+      spring.datasource.password: ${HAPI_DB_PASSWORD:-hapi}
+      spring.datasource.driverClassName: org.postgresql.Driver
+      spring.jpa.properties.hibernate.dialect: ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgresDialect
+      hapi.fhir.fhir_version: R4
+      # Links and Location headers point back through OpenHIM, not at HAPI directly
+      hapi.fhir.server_address: http://localhost:5001/fhir/
+      hapi.fhir.client_id_strategy: ALPHANUMERIC
+      JAVA_TOOL_OPTIONS: -Xms256m -Xmx1g
+    ports:
+      - "8095:8080"   # direct access, debugging only
+    # No healthcheck: the HAPI image is distroless (no shell, curl or wget).
+
+volumes:
+  mongo-data:
+  hapi-db-data:

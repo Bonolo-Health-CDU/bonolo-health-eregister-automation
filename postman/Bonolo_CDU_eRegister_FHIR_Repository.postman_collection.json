@@ -1,0 +1,1906 @@
+{
+  "info": {
+    "name": "Bonolo CDU - eRegister Prescription Repository (OpenHIM + HAPI FHIR)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Demo of INT-01 (eRegister publishes), INT-02 (CDU pulls) and INT-03 (CDU publishes status) through OpenHIM to a HAPI FHIR R4 prescription repository. Run folders 01-05 in order. Synthetic data only."
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{cduUser}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{cduPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base",
+      "value": "http://localhost:5001/fhir"
+    },
+    {
+      "key": "eregisterUser",
+      "value": "eregister"
+    },
+    {
+      "key": "eregisterPassword",
+      "value": "eregister-demo"
+    },
+    {
+      "key": "cduUser",
+      "value": "cdu"
+    },
+    {
+      "key": "cduPassword",
+      "value": "cdu-demo"
+    },
+    {
+      "key": "registryUser",
+      "value": "registry-admin"
+    },
+    {
+      "key": "registryPassword",
+      "value": "registry-demo"
+    },
+    {
+      "key": "encounterUuid",
+      "value": ""
+    },
+    {
+      "key": "eRegisterId",
+      "value": ""
+    },
+    {
+      "key": "hivProgramId",
+      "value": ""
+    },
+    {
+      "key": "patientFullUrl",
+      "value": ""
+    },
+    {
+      "key": "allergyFullUrl",
+      "value": ""
+    },
+    {
+      "key": "mrFullUrl",
+      "value": ""
+    },
+    {
+      "key": "taskFullUrl",
+      "value": ""
+    },
+    {
+      "key": "authoredOn",
+      "value": ""
+    },
+    {
+      "key": "nextPickupDate",
+      "value": ""
+    },
+    {
+      "key": "nextVisitDate",
+      "value": ""
+    },
+    {
+      "key": "patientId",
+      "value": ""
+    },
+    {
+      "key": "mrId",
+      "value": ""
+    },
+    {
+      "key": "taskId",
+      "value": ""
+    },
+    {
+      "key": "dispenseId",
+      "value": ""
+    },
+    {
+      "key": "now",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "00 Health check",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{cduUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{cduPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Repository capability statement",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/metadata?_summary=true",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "metadata"
+              ],
+              "query": [
+                {
+                  "key": "_summary",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "01 Reference data (registry-admin)",
+      "description": "Run once. Stands in for the facility registry, Collect & Go location feed and code lists (INT-04).",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{registryUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{registryPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "PUT facility (Organization)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Organization/fac-demo-001",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Organization",
+                "fac-demo-001"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"fac-demo-001\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code\",\n      \"value\": \"DEMO-FAC-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Health facility\"\n    }\n  ],\n  \"name\": \"Demo Health Centre (Maseru)\",\n  \"address\": [\n    {\n      \"district\": \"Maseru\",\n      \"country\": \"LS\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT CDU (Organization)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Organization/cdu-bonolo",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Organization",
+                "cdu-bonolo"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Organization\",\n  \"id\": \"cdu-bonolo\",\n  \"active\": true,\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code\",\n      \"value\": \"DEMO-CDU-001\"\n    }\n  ],\n  \"type\": [\n    {\n      \"text\": \"Central Dispensing Unit\"\n    }\n  ],\n  \"name\": \"Bonolo Health Central Dispensing Unit\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT pickup point - Maseru Mall Collect&go (Location)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Location/pp-maseru-mall",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Location",
+                "pp-maseru-mall"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-maseru-mall\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Maseru Mall Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT pickup point - Mafeteng Hospital Collect&go (Location)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Location/pp-mafeteng-hosp",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Location",
+                "pp-mafeteng-hosp"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-mafeteng-hosp\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MFT-01\"\n    }\n  ],\n  \"name\": \"Mafeteng Hospital Collect&go\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Mafeteng\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT ART regimen CodeSystem",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/CodeSystem/art-regimen",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "CodeSystem",
+                "art-regimen"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"CodeSystem\",\n  \"id\": \"art-regimen\",\n  \"url\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n  \"status\": \"draft\",\n  \"content\": \"fragment\",\n  \"name\": \"ArtRegimen\",\n  \"title\": \"ART regimen codes (demo fragment)\",\n  \"description\": \"Placeholder until the Pharmacy Directorate publishes the regimen list (see DE-23).\",\n  \"concept\": [\n    {\n      \"code\": \"DEMO-TLD\",\n      \"display\": \"TDF/3TC/DTG (demo code)\"\n    },\n    {\n      \"code\": \"DEMO-ABC-3TC-DTG\",\n      \"display\": \"ABC/3TC/DTG (demo code)\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT CDU fulfilment status CodeSystem",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/CodeSystem/cdu-fulfilment-status",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "CodeSystem",
+                "cdu-fulfilment-status"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"CodeSystem\",\n  \"id\": \"cdu-fulfilment-status\",\n  \"url\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n  \"status\": \"draft\",\n  \"content\": \"complete\",\n  \"name\": \"CduFulfilmentStatus\",\n  \"title\": \"CDU fulfilment status\",\n  \"description\": \"Task.businessStatus codes published by the CDU (workbook 'Status Map').\",\n  \"concept\": [\n    {\n      \"code\": \"received\",\n      \"display\": \"Received\"\n    },\n    {\n      \"code\": \"query-raised\",\n      \"display\": \"Query raised\"\n    },\n    {\n      \"code\": \"returned-to-facility\",\n      \"display\": \"Returned to facility\"\n    },\n    {\n      \"code\": \"in-preparation\",\n      \"display\": \"In preparation\"\n    },\n    {\n      \"code\": \"ready-for-dispatch\",\n      \"display\": \"Ready for dispatch\"\n    },\n    {\n      \"code\": \"dispatched\",\n      \"display\": \"Dispatched\"\n    },\n    {\n      \"code\": \"collected\",\n      \"display\": \"Collected\"\n    },\n    {\n      \"code\": \"uncollected-returned\",\n      \"display\": \"Returned uncollected\"\n    },\n    {\n      \"code\": \"cancelled\",\n      \"display\": \"Cancelled\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Created or updated', () => pm.expect(pm.response.code).to.be.oneOf([200, 201]));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 eRegister - publish prescription (INT-01)",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{eregisterUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{eregisterPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Publish prescription (transaction Bundle)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "INT-01. One Bonolo encounter in eRegister -> Patient + AllergyIntolerance + MedicationRequest + Task, posted atomically. Conditional create on identifiers makes the call idempotent (DE-01). Each send generates a NEW prescription.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200 transaction-response', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().type).to.eql('transaction-response');",
+                  "});",
+                  "const idOf = i => pm.response.json().entry[i].response.location.split('/')[1];",
+                  "pm.collectionVariables.set('patientId', idOf(0));",
+                  "pm.collectionVariables.set('mrId', idOf(2));",
+                  "pm.collectionVariables.set('taskId', idOf(3));",
+                  "pm.test('Patient, MedicationRequest and Task created (201)', () => {",
+                  "  const s = pm.response.json().entry.map(e => e.response.status);",
+                  "  pm.expect(s[0]).to.match(/^20[01]/);   // patient may already exist",
+                  "  pm.expect(s[2]).to.match(/^201/);",
+                  "  pm.expect(s[3]).to.match(/^201/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Replay same prescription (duplicate suppression)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "Re-sends the exact same bundle, as the 15-minute sweep or a retry would. Nothing is duplicated.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Nothing new created: every entry is 200 OK (conditional create matched)', () => {",
+                  "  pm.response.json().entry.forEach(e => pm.expect(e.response.status).to.match(/^200/));",
+                  "});",
+                  "pm.test('Same MedicationRequest id returned', () => {",
+                  "  const loc = pm.response.json().entry[2].response.location;",
+                  "  pm.expect(loc.split('/')[1]).to.eql(pm.collectionVariables.get('mrId'));",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Confirm one copy stored",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationRequest?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_summary=count",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationRequest"
+              ],
+              "query": [
+                {
+                  "key": "identifier",
+                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                },
+                {
+                  "key": "_summary",
+                  "value": "count"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Exactly one MedicationRequest for this encounter', () => pm.expect(pm.response.json().total).to.eql(1));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "03 CDU - pull prescriptions and patient data (INT-02)",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{cduUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{cduPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Work queue: new prescriptions for the CDU",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task?owner=Organization/cdu-bonolo&status=requested&_include=Task:focus&_include=Task:patient&_sort=authored-on&_count=50",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task"
+              ],
+              "query": [
+                {
+                  "key": "owner",
+                  "value": "Organization/cdu-bonolo"
+                },
+                {
+                  "key": "status",
+                  "value": "requested"
+                },
+                {
+                  "key": "_include",
+                  "value": "Task:focus"
+                },
+                {
+                  "key": "_include",
+                  "value": "Task:patient"
+                },
+                {
+                  "key": "_sort",
+                  "value": "authored-on"
+                },
+                {
+                  "key": "_count",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": "INT-02 pull model. The CDU polls for Tasks it owns that are still 'requested', and gets the prescription and patient in one call."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const types = (pm.response.json().entry || []).map(e => e.resource.resourceType);",
+                  "pm.test('Tasks returned with their MedicationRequest and Patient', () => {",
+                  "  pm.expect(types).to.include('Task');",
+                  "  pm.expect(types).to.include('MedicationRequest');",
+                  "  pm.expect(types).to.include('Patient');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get prescription by eRegister order id (with patient)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationRequest?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_include=MedicationRequest:patient",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationRequest"
+              ],
+              "query": [
+                {
+                  "key": "identifier",
+                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                },
+                {
+                  "key": "_include",
+                  "value": "MedicationRequest:patient"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get patient by eRegister ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Patient?identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Patient"
+              ],
+              "query": [
+                {
+                  "key": "identifier",
+                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('One patient', () => pm.expect(pm.response.json().total).to.eql(1));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get patient record ($everything)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Patient/{{patientId}}/$everything",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Patient",
+                "{{patientId}}",
+                "$everything"
+              ],
+              "query": []
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get patient allergies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/AllergyIntolerance?patient=Patient/{{patientId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "AllergyIntolerance"
+              ],
+              "query": [
+                {
+                  "key": "patient",
+                  "value": "Patient/{{patientId}}"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reference data: pickup points",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Location?status=active&_count=100",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Location"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "active"
+                },
+                {
+                  "key": "_count",
+                  "value": "100"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reference data: facility by DHIS2 code",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Organization?identifier=https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code|DEMO-FAC-001",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Organization"
+              ],
+              "query": [
+                {
+                  "key": "identifier",
+                  "value": "https://fhir.bonolo-cdu.example/identifier/dhis2-orgunit-code|DEMO-FAC-001"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "04 CDU - publish status and dispense (INT-03)",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{cduUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{cduPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Status: Received (claim the Task)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"accepted\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"received\",\n          \"display\": \"Received\"\n        }\n      ],\n      \"text\": \"Received\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task is accepted / received', () => {",
+                  "  const t = pm.response.json();",
+                  "  pm.expect(t.status).to.eql('accepted');",
+                  "  pm.expect(t.businessStatus.coding[0].code).to.eql('received');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Status: In preparation",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"in-preparation\",\n          \"display\": \"In preparation\"\n        }\n      ],\n      \"text\": \"In preparation\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task is in-progress / in-preparation', () => {",
+                  "  const t = pm.response.json();",
+                  "  pm.expect(t.status).to.eql('in-progress');",
+                  "  pm.expect(t.businessStatus.coding[0].code).to.eql('in-preparation');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Record what was dispensed (MedicationDispense)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationDispense",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationDispense"
+              ],
+              "query": []
+            },
+            "description": "DE-39. Product, quantity and days' supply. Lot and expiry would go on a contained Medication.batch.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n        \"code\": \"DEMO-TLD\",\n        \"display\": \"TDF/3TC/DTG (demo code)\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/cdu-bonolo\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pp-maseru-mall\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('dispenseId', pm.response.json().id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Status: Dispatched",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "INT-03. JSON Patch on the Task: Task.status is the FHIR workflow state, businessStatus the CDU status (Status Map).",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"in-progress\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"dispatched\",\n          \"display\": \"Dispatched\"\n        }\n      ],\n      \"text\": \"Dispatched\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task is in-progress / dispatched', () => {",
+                  "  const t = pm.response.json();",
+                  "  pm.expect(t.status).to.eql('in-progress');",
+                  "  pm.expect(t.businessStatus.coding[0].code).to.eql('dispatched');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Status: Collected (from Collect & Go)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "Collection status arrives at the CDU from Collect & Go and is republished on the same Task.",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"completed\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"collected\",\n          \"display\": \"Collected\"\n        }\n      ],\n      \"text\": \"Collected\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/lastModified\",\n    \"value\": \"{{now}}\"\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set('now', new Date().toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Task is completed / collected', () => {",
+                  "  const t = pm.response.json();",
+                  "  pm.expect(t.status).to.eql('completed');",
+                  "  pm.expect(t.businessStatus.coding[0].code).to.eql('collected');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "05 eRegister - read status back",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{eregisterUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{eregisterPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Prescription with CDU status and dispense",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationRequest?_id={{mrId}}&_revinclude=Task:focus&_revinclude=MedicationDispense:prescription",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationRequest"
+              ],
+              "query": [
+                {
+                  "key": "_id",
+                  "value": "{{mrId}}"
+                },
+                {
+                  "key": "_revinclude",
+                  "value": "Task:focus"
+                },
+                {
+                  "key": "_revinclude",
+                  "value": "MedicationDispense:prescription"
+                }
+              ]
+            },
+            "description": "What eRegister would render on the patient profile (D6)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const res = pm.response.json().entry.map(e => e.resource);",
+                  "const task = res.find(r => r.resourceType === 'Task');",
+                  "pm.test('Task status visible to eRegister', () => pm.expect(task.businessStatus).to.exist);",
+                  "console.log('CDU status:', task.status, task.businessStatus && task.businessStatus.text);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "All open CDU prescriptions from my facility",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task?requester=Organization/fac-demo-001&status:not=completed&status:not=cancelled&_count=50",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task"
+              ],
+              "query": [
+                {
+                  "key": "requester",
+                  "value": "Organization/fac-demo-001"
+                },
+                {
+                  "key": "status:not",
+                  "value": "completed"
+                },
+                {
+                  "key": "status:not",
+                  "value": "cancelled"
+                },
+                {
+                  "key": "_count",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "06 Access control (expected failures)",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{cduUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{cduPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "CDU cannot publish prescriptions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{cduUser}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{cduPassword}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Rejected by OpenHIM', () => pm.expect(pm.response.code).to.be.oneOf([401, 403, 404]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "eRegister cannot record a dispense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationDispense",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationDispense"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"MedicationDispense\",\n  \"status\": \"completed\",\n  \"medicationCodeableConcept\": {\n    \"coding\": [\n      {\n        \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n        \"code\": \"DEMO-TLD\",\n        \"display\": \"TDF/3TC/DTG (demo code)\"\n      }\n    ]\n  },\n  \"subject\": {\n    \"reference\": \"Patient/{{patientId}}\"\n  },\n  \"authorizingPrescription\": [\n    {\n      \"reference\": \"MedicationRequest/{{mrId}}\"\n    }\n  ],\n  \"performer\": [\n    {\n      \"actor\": {\n        \"reference\": \"Organization/cdu-bonolo\"\n      }\n    }\n  ],\n  \"quantity\": {\n    \"value\": 90,\n    \"unit\": \"tablet\"\n  },\n  \"daysSupply\": {\n    \"value\": 90,\n    \"unit\": \"days\",\n    \"system\": \"http://unitsofmeasure.org\",\n    \"code\": \"d\"\n  },\n  \"whenPrepared\": \"{{now}}\",\n  \"destination\": {\n    \"reference\": \"Location/pp-maseru-mall\"\n  },\n  \"dosageInstruction\": [\n    {\n      \"patientInstruction\": \"Take one tablet daily\"\n    }\n  ]\n}"
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{eregisterUser}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{eregisterPassword}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Rejected by OpenHIM', () => pm.expect(pm.response.code).to.be.oneOf([401, 403, 404]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "eRegister cannot change reference data",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Location/pp-maseru-mall",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Location",
+                "pp-maseru-mall"
+              ],
+              "query": []
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Location\",\n  \"id\": \"pp-maseru-mall\",\n  \"status\": \"active\",\n  \"identifier\": [\n    {\n      \"system\": \"https://fhir.bonolo-cdu.example/identifier/collect-and-go-location\",\n      \"value\": \"CG-DEMO-MSU-01\"\n    }\n  ],\n  \"name\": \"Hijacked\",\n  \"type\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/pickup-type\",\n          \"code\": \"E-locker\"\n        }\n      ],\n      \"text\": \"E-locker\"\n    }\n  ],\n  \"address\": {\n    \"district\": \"Maseru\",\n    \"country\": \"LS\"\n  },\n  \"managingOrganization\": {\n    \"display\": \"Collect & Go\"\n  }\n}"
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{eregisterUser}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{eregisterPassword}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Rejected by OpenHIM', () => pm.expect(pm.response.code).to.be.oneOf([401, 403, 404]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "No credentials",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Patient",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Patient"
+              ],
+              "query": []
+            },
+            "description": "",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Rejected by OpenHIM', () => pm.expect(pm.response.code).to.be.oneOf([401, 403, 404]));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Wrong password",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Patient",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Patient"
+              ],
+              "query": []
+            },
+            "description": "",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "cdu",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "wrong",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Rejected by OpenHIM', () => pm.expect(pm.response.code).to.be.oneOf([401, 403, 404]));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "07 Scenario - eRegister cancels a prescription",
+      "description": "",
+      "auth": {
+        "type": "basic",
+        "basic": [
+          {
+            "key": "username",
+            "value": "{{eregisterUser}}",
+            "type": "string"
+          },
+          {
+            "key": "password",
+            "value": "{{eregisterPassword}}",
+            "type": "string"
+          }
+        ]
+      },
+      "item": [
+        {
+          "name": "Publish prescription (transaction Bundle)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [],
+              "query": []
+            },
+            "description": "INT-01. One Bonolo encounter in eRegister -> Patient + AllergyIntolerance + MedicationRequest + Task, posted atomically. Conditional create on identifiers makes the call idempotent (DE-01). Each send generates a NEW prescription.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resourceType\": \"Bundle\",\n  \"type\": \"transaction\",\n  \"entry\": [\n    {\n      \"fullUrl\": \"urn:uuid:{{patientFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Patient\",\n        \"identifier\": [\n          {\n            \"use\": \"official\",\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-id\",\n            \"value\": \"{{eRegisterId}}\"\n          },\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/hiv-program-id\",\n            \"value\": \"{{hivProgramId}}\"\n          }\n        ],\n        \"name\": [\n          {\n            \"use\": \"official\",\n            \"family\": \"Demo\",\n            \"given\": [\n              \"Palesa\"\n            ]\n          }\n        ],\n        \"gender\": \"female\",\n        \"birthDate\": \"1990-05-14\",\n        \"telecom\": [\n          {\n            \"system\": \"phone\",\n            \"value\": \"+26650000001\",\n            \"rank\": 1\n          }\n        ],\n        \"address\": [\n          {\n            \"district\": \"Maseru\",\n            \"country\": \"LS\"\n          }\n        ]\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Patient\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-id|{{eRegisterId}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{allergyFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"AllergyIntolerance\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}-allergy\"\n          }\n        ],\n        \"clinicalStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical\",\n              \"code\": \"active\"\n            }\n          ]\n        },\n        \"verificationStatus\": {\n          \"coding\": [\n            {\n              \"system\": \"http://terminology.hl7.org/CodeSystem/allergyintolerance-verification\",\n              \"code\": \"confirmed\"\n            }\n          ]\n        },\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://snomed.info/sct\",\n              \"code\": \"716186003\",\n              \"display\": \"No known allergy\"\n            }\n          ]\n        },\n        \"patient\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"recordedDate\": \"{{authoredOn}}\"\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"AllergyIntolerance\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}-allergy\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{mrFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"MedicationRequest\",\n        \"extension\": [\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/originating-facility\",\n            \"valueReference\": {\n              \"reference\": \"Organization/fac-demo-001\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/pickup-point\",\n            \"valueReference\": {\n              \"reference\": \"Location/pp-maseru-mall\"\n            }\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/requested-pickup-date\",\n            \"valueDate\": \"{{nextPickupDate}}\"\n          },\n          {\n            \"url\": \"https://fhir.bonolo-cdu.example/StructureDefinition/next-clinical-visit-date\",\n            \"valueDate\": \"{{nextVisitDate}}\"\n          }\n        ],\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"active\",\n        \"intent\": \"order\",\n        \"category\": [\n          {\n            \"coding\": [\n              {\n                \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-programme\",\n                \"code\": \"ART\"\n              }\n            ]\n          }\n        ],\n        \"medicationCodeableConcept\": {\n          \"coding\": [\n            {\n              \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/art-regimen\",\n              \"code\": \"DEMO-TLD\",\n              \"display\": \"TDF/3TC/DTG (demo code)\"\n            }\n          ]\n        },\n        \"subject\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"display\": \"Demo Clinician\"\n        },\n        \"dosageInstruction\": [\n          {\n            \"patientInstruction\": \"Take one tablet daily\"\n          }\n        ],\n        \"dispenseRequest\": {\n          \"expectedSupplyDuration\": {\n            \"value\": 90,\n            \"unit\": \"days\",\n            \"system\": \"http://unitsofmeasure.org\",\n            \"code\": \"d\"\n          },\n          \"numberOfRepeatsAllowed\": 0\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"MedicationRequest\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    },\n    {\n      \"fullUrl\": \"urn:uuid:{{taskFullUrl}}\",\n      \"resource\": {\n        \"resourceType\": \"Task\",\n        \"identifier\": [\n          {\n            \"system\": \"https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid\",\n            \"value\": \"{{encounterUuid}}\"\n          }\n        ],\n        \"status\": \"requested\",\n        \"intent\": \"order\",\n        \"code\": {\n          \"coding\": [\n            {\n              \"system\": \"http://hl7.org/fhir/CodeSystem/task-code\",\n              \"code\": \"fulfill\"\n            }\n          ]\n        },\n        \"focus\": {\n          \"reference\": \"urn:uuid:{{mrFullUrl}}\"\n        },\n        \"for\": {\n          \"reference\": \"urn:uuid:{{patientFullUrl}}\"\n        },\n        \"authoredOn\": \"{{authoredOn}}\",\n        \"lastModified\": \"{{authoredOn}}\",\n        \"requester\": {\n          \"reference\": \"Organization/fac-demo-001\"\n        },\n        \"owner\": {\n          \"reference\": \"Organization/cdu-bonolo\"\n        }\n      },\n      \"request\": {\n        \"method\": \"POST\",\n        \"url\": \"Task\",\n        \"ifNoneExist\": \"identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// A new prescription = a new Bonolo encounter in eRegister",
+                  "const uuid = () => require('uuid').v4();",
+                  "const d = n => new Date(Date.now() + n * 864e5).toISOString().slice(0, 10);",
+                  "pm.collectionVariables.set('encounterUuid', uuid());",
+                  "pm.collectionVariables.set('eRegisterId', 'DEMO-' + Math.floor(100000 + Math.random() * 900000));",
+                  "pm.collectionVariables.set('hivProgramId', 'HIV-DEMO-' + Math.floor(1000 + Math.random() * 9000));",
+                  "['patientFullUrl', 'allergyFullUrl', 'mrFullUrl', 'taskFullUrl'].forEach(k => pm.collectionVariables.set(k, uuid()));",
+                  "pm.collectionVariables.set('authoredOn', new Date().toISOString());",
+                  "pm.collectionVariables.set('nextPickupDate', d(7));",
+                  "pm.collectionVariables.set('nextVisitDate', d(97));"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP 200 transaction-response', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().type).to.eql('transaction-response');",
+                  "});",
+                  "const idOf = i => pm.response.json().entry[i].response.location.split('/')[1];",
+                  "pm.collectionVariables.set('patientId', idOf(0));",
+                  "pm.collectionVariables.set('mrId', idOf(2));",
+                  "pm.collectionVariables.set('taskId', idOf(3));",
+                  "pm.test('Patient, MedicationRequest and Task created (201)', () => {",
+                  "  const s = pm.response.json().entry.map(e => e.response.status);",
+                  "  pm.expect(s[0]).to.match(/^20[01]/);   // patient may already exist",
+                  "  pm.expect(s[2]).to.match(/^201/);",
+                  "  pm.expect(s[3]).to.match(/^201/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "eRegister cancels the prescription",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/MedicationRequest/{{mrId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "MedicationRequest",
+                "{{mrId}}"
+              ],
+              "query": []
+            },
+            "description": "DE-03 / Q14. eRegister signals cancellation on the MedicationRequest ...",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"cancelled\"\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Cancelled', () => pm.expect(pm.response.json().status).to.eql('cancelled'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "... and cancels the Task",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json-patch+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task/{{taskId}}",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task",
+                "{{taskId}}"
+              ],
+              "query": []
+            },
+            "description": "... so it drops out of the CDU work queue.",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/status\",\n    \"value\": \"cancelled\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/businessStatus\",\n    \"value\": {\n      \"coding\": [\n        {\n          \"system\": \"https://fhir.bonolo-cdu.example/CodeSystem/cdu-fulfilment-status\",\n          \"code\": \"cancelled\",\n          \"display\": \"Cancelled\"\n        }\n      ],\n      \"text\": \"Cancelled\"\n    }\n  }\n]"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Task cancelled', () => pm.expect(pm.response.json().status).to.eql('cancelled'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CDU work queue no longer shows it",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/fhir+json"
+              }
+            ],
+            "url": {
+              "raw": "{{base}}/Task?owner=Organization/cdu-bonolo&status=requested&identifier=https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}&_summary=count",
+              "host": [
+                "{{base}}"
+              ],
+              "path": [
+                "Task"
+              ],
+              "query": [
+                {
+                  "key": "owner",
+                  "value": "Organization/cdu-bonolo"
+                },
+                {
+                  "key": "status",
+                  "value": "requested"
+                },
+                {
+                  "key": "identifier",
+                  "value": "https://fhir.bonolo-cdu.example/identifier/eregister-order-uuid|{{encounterUuid}}"
+                },
+                {
+                  "key": "_summary",
+                  "value": "count"
+                }
+              ]
+            },
+            "description": "",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{cduUser}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{cduPassword}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Not in queue', () => pm.expect(pm.response.json().total).to.eql(0));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

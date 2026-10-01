@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Reference data - registry admin",
+    "description": "Facilities, pickup points and code lists. Written only by the registry role (stands in for the national registries).",
+    "urlPattern": "^/fhir/(Organization|Location|CodeSystem|ValueSet|ConceptMap)(/.*)?$",
+    "methods": ["POST", "PUT", "PATCH", "DELETE"],
+    "priority": 1,
+    "allow": ["registry"],
+    "authType": "private",
+    "type": "http",
+    "status": "enabled",
+    "requestBody": true,
+    "responseBody": true,
+    "routes": [
+      { "name": "HAPI FHIR", "host": "hapi-fhir", "port": 8080, "primary": true, "type": "http", "secured": false }
+    ]
+  },
+  {
+    "name": "INT-03 Fulfilment status - Task updates",
+    "description": "CDU publishes lifecycle status on the Task. eRegister may reset a Task to 'requested' on resubmission.",
+    "urlPattern": "^/fhir/Task(/.*)?$",
+    "methods": ["PUT", "PATCH"],
+    "priority": 2,
+    "allow": ["cdu", "eregister"],
+    "authType": "private",
+    "type": "http",
+    "status": "enabled",
+    "requestBody": true,
+    "responseBody": true,
+    "routes": [
+      { "name": "HAPI FHIR", "host": "hapi-fhir", "port": 8080, "primary": true, "type": "http", "secured": false }
+    ]
+  },
+  {
+    "name": "INT-03 Dispense record - MedicationDispense",
+    "description": "CDU records what was dispensed against the prescription.",
+    "urlPattern": "^/fhir/MedicationDispense(/.*)?$",
+    "methods": ["POST", "PUT", "PATCH"],
+    "priority": 2,
+    "allow": ["cdu"],
+    "authType": "private",
+    "type": "http",
+    "status": "enabled",
+    "requestBody": true,
+    "responseBody": true,
+    "routes": [
+      { "name": "HAPI FHIR", "host": "hapi-fhir", "port": 8080, "primary": true, "type": "http", "secured": false }
+    ]
+  },
+  {
+    "name": "INT-01 Prescription publication - eRegister",
+    "description": "eRegister publishes prescriptions (transaction Bundle of Patient, MedicationRequest, Task) and amendments.",
+    "urlPattern": "^/fhir(/.*)?$",
+    "methods": ["POST", "PUT", "PATCH"],
+    "priority": 5,
+    "allow": ["eregister"],
+    "authType": "private",
+    "type": "http",
+    "status": "enabled",
+    "requestBody": true,
+    "responseBody": true,
+    "routes": [
+      { "name": "HAPI FHIR", "host": "hapi-fhir", "port": 8080, "primary": true, "type": "http", "secured": false }
+    ]
+  },
+  {
+    "name": "INT-02 Repository read - eRegister, CDU",
+    "description": "Read access to the prescription repository: CDU pulls work, eRegister reads status back.",
+    "urlPattern": "^/fhir(/.*)?$",
+    "methods": ["GET"],
+    "priority": 10,
+    "allow": ["cdu", "eregister", "registry"],
+    "authType": "private",
+    "type": "http",
+    "status": "enabled",
+    "requestBody": true,
+    "responseBody": true,
+    "routes": [
+      { "name": "HAPI FHIR", "host": "hapi-fhir", "port": 8080, "primary": true, "type": "http", "secured": false }
+    ]
+  }
+]

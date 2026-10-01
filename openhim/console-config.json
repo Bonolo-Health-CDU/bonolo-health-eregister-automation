@@ -1,0 +1,15 @@
+{
+  "version": "1.18.2",
+  "minCoreVersion": "3.4.0",
+  "protocol": "https",
+  "host": "localhost",
+  "port": 8080,
+  "title": "OpenHIM — Bonolo CDU Prescription Repository",
+  "footerTitle": "OpenHIM Administration Console",
+  "footerPoweredBy": "<a href='http://openhim.org/' target='_blank'>Powered by OpenHIM</a>",
+  "loginBanner": "Demo environment — synthetic data only",
+  "mediatorLastHeartbeatWarningSeconds": 60,
+  "mediatorLastHeartbeatDangerSeconds": 120,
+  "showLoginForm": true,
+  "ssoEnabled": false
+}

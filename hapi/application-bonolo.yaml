@@ -1,0 +1,20 @@
+# Verified against image/v8.12.0-1; exact source links are in hapi/README.md.
+hapi:
+  fhir:
+    custom-bean-packages: ls.gov.health.bonolo
+    custom-interceptor-classes: ls.gov.health.bonolo.ProfileDeclarationStatusInterceptor
+    # This contract is deliberately draft; install its conformance resources too.
+    validate_resource_status_for_package_upload: false
+    implementationguides:
+      bonolo:
+        packageUrl: file:/app/igs/ls.moh.bonolo.cdu-0.2.0.tgz
+        name: ls.moh.bonolo.cdu
+        version: 0.2.0
+        installMode: STORE_AND_INSTALL
+        reloadExisting: false
+    # Never include package/example in additionalResourceFolders.
+    validation:
+      requests_enabled: true
+      responses_enabled: false
+    enable_repository_validating_interceptor: true
+    # No remote_terminology_service: validation uses local R4 + IG terminology.

@@ -4,6 +4,7 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
+./scripts/wait-for-hapi.sh
 set -a; source .env; set +a
 
 api() { curl -sk -u "$OPENHIM_ROOT_USER:$OPENHIM_ROOT_PASSWORD" "$@"; }

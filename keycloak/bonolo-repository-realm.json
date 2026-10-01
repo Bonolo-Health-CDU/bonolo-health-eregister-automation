@@ -1,0 +1,127 @@
+{
+  "realm": "bonolo-repository",
+  "displayName": "Bonolo Prescription Repository",
+  "enabled": true,
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "resetPasswordAllowed": false,
+  "rememberMe": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "bruteForceProtected": true,
+  "failureFactor": 5,
+  "passwordPolicy": "length(12) and notUsername and notEmail",
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 28800,
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "repo-admin",
+        "description": "Repository administrator: manages portal users and monitors integrations."
+      },
+      {
+        "name": "programme-manager",
+        "description": "MoH / programme manager: aggregate dashboards and reports only, no patient details."
+      },
+      {
+        "name": "support",
+        "description": "Support / data clerk: searches prescriptions and traces integration problems."
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "repository-portal",
+      "name": "Prescription Repository Portal",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${PORTAL_CLIENT_SECRET}",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "rootUrl": "${PORTAL_PUBLIC_URL}",
+      "baseUrl": "/",
+      "redirectUris": ["${PORTAL_PUBLIC_URL}/auth/callback"],
+      "webOrigins": ["${PORTAL_PUBLIC_URL}"],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "${PORTAL_PUBLIC_URL}/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "portal roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "roles",
+            "multivalued": "true",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "repository-portal-admin",
+      "name": "Prescription Repository Portal - user management",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "${PORTAL_ADMIN_CLIENT_SECRET}",
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-repository-portal-admin",
+      "enabled": true,
+      "serviceAccountClientId": "repository-portal-admin",
+      "clientRoles": {
+        "realm-management": ["view-users", "query-users", "manage-users"]
+      }
+    },
+    {
+      "username": "repo.admin",
+      "email": "repo.admin@example.org",
+      "firstName": "Repository",
+      "lastName": "Administrator",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "${PORTAL_DEMO_ADMIN_PASSWORD}", "temporary": false }],
+      "realmRoles": ["repo-admin"]
+    },
+    {
+      "username": "programme.manager",
+      "email": "programme.manager@example.org",
+      "firstName": "Programme",
+      "lastName": "Manager",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "${PORTAL_DEMO_MANAGER_PASSWORD}", "temporary": false }],
+      "realmRoles": ["programme-manager"]
+    },
+    {
+      "username": "support.clerk",
+      "email": "support.clerk@example.org",
+      "firstName": "Support",
+      "lastName": "Clerk",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [{ "type": "password", "value": "${PORTAL_DEMO_SUPPORT_PASSWORD}", "temporary": false }],
+      "realmRoles": ["support"]
+    }
+  ]
+}

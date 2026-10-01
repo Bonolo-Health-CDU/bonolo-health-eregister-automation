@@ -27,7 +27,8 @@ client() { # clientID name role password
 clients=$(jq -s . \
   <(client eregister      "eRegister (Bahmni) - facility publisher"   eregister "$EREGISTER_PASSWORD") \
   <(client cdu            "Bonolo Health CDU (Odoo 16)"               cdu       "$CDU_PASSWORD") \
-  <(client registry-admin "Registry services - reference data admin"  registry  "$REGISTRY_PASSWORD"))
+  <(client registry-admin "Registry services - reference data admin"  registry  "$REGISTRY_PASSWORD") \
+  <(client portal         "Prescription Repository Portal (read-only)" portal    "$PORTAL_PASSWORD"))
 
 jq -n --argjson clients "$clients" --slurpfile channels openhim/channels.json \
   '{Clients: $clients, Channels: $channels[0]}' > /tmp/openhim-metadata.$$.json
@@ -37,5 +38,28 @@ api -X POST -H 'Content-Type: application/json' \
   --data @/tmp/openhim-metadata.$$.json "$OPENHIM_API/metadata" \
   | jq -r '.[] | "  \(.model)\t\(.record.name // .record.clientID)\t\(.status)\t\(.message // "")"'
 rm -f /tmp/openhim-metadata.$$.json
+
+# Read-only API user for the repository portal's integration-health pages.
+echo "Configuring the portal's read-only OpenHIM user ..."
+role=$(jq -n '{name: "portal-monitor", permissions: {
+  "channel-view-all": true, "client-view-all": true, "mediator-view-all": true,
+  "transaction-view-all": true, "transaction-view-body-all": true}}')
+if [[ $(api -o /dev/null -w '%{http_code}' "$OPENHIM_API/roles/portal-monitor") == 200 ]]; then
+  api -X PUT -H 'Content-Type: application/json' --data "$role" "$OPENHIM_API/roles/portal-monitor" >/dev/null
+else
+  api -X POST -H 'Content-Type: application/json' --data "$role" "$OPENHIM_API/roles" >/dev/null
+fi
+if [[ $(api -o /dev/null -w '%{http_code}' "$OPENHIM_API/users/$OPENHIM_PORTAL_USER") != 200 ]]; then
+  api -X POST -H 'Content-Type: application/json' "$OPENHIM_API/users" \
+    --data "$(jq -n --arg email "$OPENHIM_PORTAL_USER" \
+      '{email: $email, firstname: "Repository", surname: "Portal", groups: ["portal-monitor"]}')" >/dev/null
+fi
+# Always set the password through an update: OpenHIM 8.5 stores a password
+# given on POST /users without hashing it, so that one can never log in.
+api -X PUT -H 'Content-Type: application/json' "$OPENHIM_API/users/$OPENHIM_PORTAL_USER" \
+  --data "$(jq -n --arg email "$OPENHIM_PORTAL_USER" --arg password "$OPENHIM_PORTAL_USER_PASSWORD" \
+    '{email: $email, groups: ["portal-monitor"], password: $password}')" >/dev/null
+status=$(curl -sk -o /dev/null -w '%{http_code}' -u "$OPENHIM_PORTAL_USER:$OPENHIM_PORTAL_USER_PASSWORD" "$OPENHIM_API/transactions?filterLimit=1")
+printf '  portal-monitor\t%s\tAPI read check: HTTP %s\n' "$OPENHIM_PORTAL_USER" "$status"
 
 echo "Done. Router: http://localhost:5001/fhir  Console: http://localhost:9000"

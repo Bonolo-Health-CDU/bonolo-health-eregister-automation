@@ -1,0 +1,90 @@
+/* Ministry of Health branding on top of keycloak.v2 (css/styles.css). */
+
+:root {
+    /* Portal teal (Mantine teal 8/9): white text stays readable on it. */
+    --bonolo-teal: #099268;
+    --bonolo-teal-dark: #087f5b;
+    --keycloak-card-top-color: var(--bonolo-teal);
+    /* PatternFly's primary and focus colours, used for focus rings and links. */
+    --pf-v5-global--primary-color--100: var(--bonolo-teal);
+    --pf-v5-global--primary-color--200: var(--bonolo-teal-dark);
+    --pf-v5-global--active-color--100: var(--bonolo-teal);
+    --pf-v5-global--link--Color: var(--bonolo-teal);
+    --pf-v5-global--link--Color--hover: var(--bonolo-teal-dark);
+}
+
+/* A calm teal background instead of Keycloak's artwork. */
+.login-pf body,
+body#keycloak-bg {
+    background: linear-gradient(160deg, #0b3d36 0%, #0f5c50 55%, #12715f 100%) fixed;
+}
+
+/* Header: the Ministry logo on a white plate, then the realm name. The plate
+   keeps the emblem's colours intact in dark mode as well. */
+#kc-header-wrapper {
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+#kc-header-wrapper::before {
+    content: "";
+    display: block;
+    width: 120px;
+    height: 124px;
+    margin: 0 auto 14px;
+    background: #fff url("../img/moh-logo.png") center / 100px auto no-repeat;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Primary buttons and links in the portal's teal. */
+.pf-v5-c-button.pf-m-primary {
+    --pf-v5-c-button--m-primary--BackgroundColor: var(--bonolo-teal);
+    --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--bonolo-teal-dark);
+    --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--bonolo-teal-dark);
+    --pf-v5-c-button--m-primary--active--BackgroundColor: var(--bonolo-teal-dark);
+}
+
+.pf-v5-c-login__main a,
+.pf-v5-c-button.pf-m-link {
+    --pf-v5-c-button--m-link--Color: var(--bonolo-teal);
+    --pf-v5-c-button--m-link--hover--Color: var(--bonolo-teal-dark);
+    color: var(--bonolo-teal);
+}
+
+.pf-v5-c-form-control {
+    --pf-v5-c-form-control--focus--after--BorderBottomColor: var(--bonolo-teal);
+    --pf-v5-c-form-control--hover--after--BorderBottomColor: var(--bonolo-teal);
+}
+
+/* Keep a clearly visible keyboard focus outline, in teal instead of the
+   browser's default blue. */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--bonolo-teal);
+    outline-offset: 1px;
+}
+
+/* Dark mode (Keycloak adds this class when the browser prefers dark). */
+.pf-v5-theme-dark {
+    --bonolo-teal: #20c997;
+    --bonolo-teal-dark: #12b886;
+}
+
+.pf-v5-theme-dark .pf-v5-c-button.pf-m-primary {
+    --pf-v5-c-button--m-primary--Color: #0b2e28;
+    --pf-v5-c-button--m-primary--hover--Color: #0b2e28;
+}
+
+/* Small screens: a smaller plate so the form stays above the fold. */
+@media (max-width: 480px) {
+    #kc-header-wrapper::before {
+        width: 92px;
+        height: 96px;
+        background-size: 76px auto;
+    }
+}

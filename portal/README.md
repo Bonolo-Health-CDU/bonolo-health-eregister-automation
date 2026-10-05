@@ -28,6 +28,8 @@ Open http://localhost:3000. The demo users are created on Keycloak's first start
 | `support.clerk` | support | dashboard, prescriptions, integration health |
 | `programme.manager` | programme-manager | dashboard only (aggregate figures, no patient details) |
 
+The Keycloak sign-in page uses the `bonolo` login theme (`keycloak/themes/bonolo`), Keycloak's default theme plus the Ministry of Health logo and the portal's colours, in CSS only. After editing the theme, recreate the container with `docker compose up -d --force-recreate keycloak`. A plain restart keeps Keycloak's cache of gzipped theme files, so browsers would still get the old CSS.
+
 The Keycloak admin console is at http://localhost:8180/admin (`admin` / `KEYCLOAK_ADMIN_PASSWORD`). The realm in `keycloak/bonolo-repository-realm.json` is imported on first start only; later changes go through the console (or recreate the `keycloak-db-data` volume).
 
 ## Dashboard

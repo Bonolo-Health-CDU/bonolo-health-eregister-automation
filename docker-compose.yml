@@ -138,6 +138,8 @@ services:
       PORTAL_DEMO_SUPPORT_PASSWORD: ${PORTAL_DEMO_SUPPORT_PASSWORD:?}
     volumes:
       - ./keycloak/bonolo-repository-realm.json:/opt/keycloak/data/import/bonolo-repository-realm.json:ro
+      # Login theme with the Ministry of Health logo (selected by the realm).
+      - ./keycloak/themes/bonolo:/opt/keycloak/themes/bonolo:ro
     ports:
       - "8180:8080"   # login pages and admin console (admin / KEYCLOAK_ADMIN_PASSWORD)
     healthcheck:

@@ -33,7 +33,8 @@ kc add-roles -r "$realm" --uusername "service-account-$client" --cclientid realm
   --rolename view-users --rolename query-users --rolename manage-users
 echo "  service account roles: view-users, query-users, manage-users"
 
-# Keycloak's own record of administrative changes (the portal also logs who acted).
-kc update "realms/$realm" -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true
-echo "  admin events enabled"
+# Keycloak's own record of administrative changes (the portal also logs who
+# acted), and the login theme with the Ministry of Health logo.
+kc update "realms/$realm" -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s loginTheme=bonolo
+echo "  admin events enabled, login theme: bonolo"
 echo "Done."

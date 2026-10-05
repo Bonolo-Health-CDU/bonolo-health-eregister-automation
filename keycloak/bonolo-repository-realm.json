@@ -1,6 +1,7 @@
 {
   "realm": "bonolo-repository",
   "displayName": "Bonolo Prescription Repository",
+  "loginTheme": "bonolo",
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": false,

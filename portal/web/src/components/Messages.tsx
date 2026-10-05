@@ -3,12 +3,22 @@ import { IconAlertTriangle, IconLock, IconMapQuestion } from "@tabler/icons-reac
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 import { api, signIn } from "../api";
+import { MohLogo } from "./MohLogo";
 
-function MessageCard(props: { icon: ReactNode; color: string; title: string; children: ReactNode; action?: ReactNode }) {
+function MessageCard(props: {
+  icon: ReactNode;
+  color: string;
+  title: string;
+  children: ReactNode;
+  action?: ReactNode;
+  /** Shown outside the portal frame (before sign-in or without access): carry the Ministry logo. */
+  branded?: boolean;
+}) {
   return (
-    <Center mih="60vh" p="md">
+    <Center mih={props.branded ? "100vh" : "60vh"} p="md">
       <Paper withBorder p="xl" maw={480} w="100%">
         <Stack align="center" ta="center" gap="sm">
+          {props.branded && <MohLogo height={96} />}
           <ThemeIcon size={48} radius="xl" variant="light" color={props.color}>
             {props.icon}
           </ThemeIcon>
@@ -23,7 +33,10 @@ function MessageCard(props: { icon: ReactNode; color: string; title: string; chi
 
 export const FullPageLoader = () => (
   <Center mih="100vh">
-    <Loader aria-label="Loading" />
+    <Stack align="center" gap="lg">
+      <MohLogo height={120} />
+      <Loader aria-label="Loading" />
+    </Stack>
   </Center>
 );
 
@@ -38,6 +51,7 @@ export const LoginError = ({ reason }: { reason: string }) => (
     icon={<IconAlertTriangle />}
     color="orange"
     title="Sign-in did not complete"
+    branded
     action={<Button onClick={() => signIn("/")}>Sign in again</Button>}
   >
     {LOGIN_ERRORS[reason] ?? "Something went wrong during sign-in."}
@@ -49,6 +63,7 @@ export const ServerUnavailable = ({ message }: { message: string }) => (
     icon={<IconAlertTriangle />}
     color="red"
     title="Portal unavailable"
+    branded
     action={<Button onClick={() => window.location.reload()}>Retry</Button>}
   >
     {message}
@@ -60,6 +75,7 @@ export const NoRole = () => (
     icon={<IconLock />}
     color="gray"
     title="No portal access yet"
+    branded
     action={
       <Button variant="default" onClick={() => void api.logout()}>
         Sign out

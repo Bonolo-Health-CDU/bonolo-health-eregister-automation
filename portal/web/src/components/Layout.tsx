@@ -27,6 +27,7 @@ import {
 import { NavLink as RouterLink, Outlet, useLocation } from "react-router";
 import { api } from "../api";
 import { canUse, ROLE_LABELS, type Feature } from "../roles";
+import { MohCrest } from "./MohLogo";
 import { useUser } from "../session";
 
 const NAV: { feature: Feature; label: string; path: string; icon: typeof IconUsers; description: string }[] = [
@@ -58,13 +59,13 @@ export function Layout() {
         <Group h="100%" px="md" justify="space-between" wrap="nowrap">
           <Group gap="sm" wrap="nowrap">
             <Burger opened={navOpen} onClick={toggle} hiddenFrom="sm" size="sm" aria-label="Toggle navigation" />
-            <IconPrescription size={26} color="var(--mantine-color-teal-6)" aria-hidden />
+            <MohCrest />
             <div>
               <Title order={4} lh={1.1}>
                 Prescription Repository
               </Title>
               <Text size="xs" c="dimmed" visibleFrom="xs">
-                Bonolo CDU · eRegister
+                Ministry of Health, Lesotho · Bonolo CDU
               </Text>
             </div>
           </Group>

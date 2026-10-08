@@ -47,7 +47,7 @@ Then check the whole flow with the Postman collection:
 npx newman run postman/Bonolo_CDU_eRegister_FHIR_Repository.postman_collection.json --insecure
 ```
 
-On fresh volumes all 38 requests and 56 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
+On fresh volumes all 45 requests and 69 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
 
 Open http://localhost:3000 and sign in as one of the demo users created on Keycloak's first start:
 
@@ -66,7 +66,7 @@ Passwords are `PORTAL_DEMO_*_PASSWORD` in `.env`.
 | INT-01 Publish | eRegister | POSTs a transaction Bundle: Patient, MedicationRequest, Task (`status = requested`, owned by the CDU) |
 | INT-02 Pull | CDU | Searches `Task?owner=Organization/1-LESOTHO-CDU&status=requested` and claims each Task (`accepted` / `received`) |
 | INT-03 Status | CDU | Updates the Task's `status` and `businessStatus` as the prescription moves through the CDU (Status Map in the data-mapping sheet) |
-| Return / resubmit | CDU, eRegister | CDU sets `rejected` / `returned-to-facility` with a reason; the facility amends the MedicationRequest and sets the Task back to `requested` |
+| Return / resubmit | CDU, eRegister | CDU sets `rejected` / `returned-to-facility` with a reason; the facility amends the MedicationRequest and sets the Task back to `requested`. Postman folder 09 runs this, with or without Odoo (see the folder's description) |
 | Cancel | eRegister | Cancels the MedicationRequest and the Task |
 
 On the CDU side this is implemented by the `cdu_eregister` Odoo module in the `bahmni-docker` repository (`bahmni-standard/extra-odoo-addons/cdu_eregister`). Postman folders 03–04 play the CDU's part. Don't use them while Odoo's automatic sync is on, or Odoo claims the Tasks first.
@@ -93,7 +93,7 @@ Channels are defined in `openhim/channels.json`; client passwords come from `.en
 | `openhim/` | Channel definitions and console configuration |
 | `keycloak/` | Realm (`bonolo-repository`: roles, clients, demo users) and the `bonolo` login theme with the Ministry of Health logo |
 | `portal/` | Admin portal: Node/Fastify server and React UI. See [portal/README.md](portal/README.md) |
-| `postman/` | End-to-end collection: reference data, publication, CDU pull and status, access control, contract rejections |
+| `postman/` | End-to-end collection: reference data, publication, CDU pull and status, access control, contract rejections, cancellation and correction scenarios |
 | `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh` |
 
 ## Common tasks

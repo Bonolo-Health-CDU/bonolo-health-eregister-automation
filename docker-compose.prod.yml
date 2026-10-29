@@ -1,0 +1,70 @@
+# Server overrides (see DEPLOYMENT.md). Selected by COMPOSE_FILE in the
+# server's .env, so plain `docker compose ...` and the scripts pick them up.
+#
+#   https://${FHIR_HOST}/fhir  --> OpenHIM router (eRegister, CDU)
+#   https://${PORTAL_HOST}     --> portal
+#   https://${AUTH_HOST}       --> Keycloak login pages (no admin console)
+#
+# Caddy terminates TLS (Let's Encrypt). Every other port listens on
+# 127.0.0.1 only: Docker publishes ports past ufw, so binding is what keeps
+# them off the network. Admins reach them through an SSH tunnel.
+
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      FHIR_HOST: ${FHIR_HOST:?}
+      PORTAL_HOST: ${PORTAL_HOST:?}
+      AUTH_HOST: ${AUTH_HOST:?}
+      ACME_EMAIL: ${ACME_EMAIL:?}
+      CADDY_GLOBAL_OPTIONS: ${CADDY_GLOBAL_OPTIONS:-}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data     # certificates and ACME account
+      - caddy-config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+
+  openhim-core:
+    environment:
+      router_externalHostname: ${FHIR_HOST:?}
+    ports: !override
+      - "127.0.0.1:8080:8080"   # management API (console, setup-openhim.sh)
+      - "127.0.0.1:5001:5001"   # router http, published through Caddy
+
+  openhim-console:
+    volumes: !override
+      - ./openhim/console-config.prod.json:/usr/share/nginx/html/config/default.json:ro
+    ports: !override
+      - "127.0.0.1:9000:80"
+
+  hapi-fhir:
+    environment:
+      hapi.fhir.server_address: https://${FHIR_HOST:?}/fhir/
+      JAVA_TOOL_OPTIONS: -Xms512m -Xmx2g
+    ports: !override
+      - "127.0.0.1:8095:8080"   # wait-for-hapi.sh and debugging
+
+  keycloak:
+    environment:
+      KC_HOSTNAME: https://${AUTH_HOST:?}
+      KC_PROXY_HEADERS: xforwarded
+      # The admin console is not published; open it through an SSH tunnel.
+      KC_HOSTNAME_ADMIN: http://localhost:8180
+      PORTAL_PUBLIC_URL: https://${PORTAL_HOST:?}
+    ports: !override
+      - "127.0.0.1:8180:8080"
+
+  portal:
+    environment:
+      PORTAL_PUBLIC_URL: https://${PORTAL_HOST:?}
+      KEYCLOAK_PUBLIC_URL: https://${AUTH_HOST:?}
+    ports: !override
+      - "127.0.0.1:3000:3000"
+
+volumes:
+  caddy-data:
+  caddy-config:

@@ -15,6 +15,7 @@ Admin browser ──► Portal :3000 ──(read-only)──► OpenHIM :5001
 - **OpenHIM is the only door.** Every client (eRegister, CDU, registry, portal) signs in to OpenHIM, which decides per channel what it may do and logs every request.
 - **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.2.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
 - **Synthetic data only.** Never load real patient data into this stack.
+- **On a server** with real hostnames and HTTPS, follow [DEPLOYMENT.md](DEPLOYMENT.md) instead of the quick start below.
 
 ## Services
 
@@ -34,6 +35,7 @@ Internal only: `hapi-db`, `keycloak-db` (PostgreSQL) and `mongo` (OpenHIM).
 Prerequisites: Docker with Compose v2, `curl`, `jq`, `openssl`, `sha512sum`, and Node.js 18+ for running the Postman collection with `npx newman`.
 
 ```sh
+cp .env.example .env            # demo settings; never commit .env
 docker compose up -d --build
 ./scripts/setup-openhim.sh      # OpenHIM clients, channels and the portal's read-only API user
 ./scripts/setup-keycloak.sh     # portal user-management access and login theme (safe to re-run)
@@ -87,14 +89,15 @@ Channels are defined in `openhim/channels.json`; client passwords come from `.en
 | Path | What |
 |---|---|
 | `docker-compose.yml` | The whole stack |
-| `.env` | Demo passwords and secrets used by compose and the scripts |
+| `.env.example` | Demo passwords and secrets; copy it to `.env` (git ignores `.env`) |
+| `docker-compose.prod.yml`, `caddy/` | Server settings: HTTPS with Caddy, real hostnames, internal ports on `127.0.0.1`. See [DEPLOYMENT.md](DEPLOYMENT.md) |
 | `hapi/` | Small derived HAPI image: installs the IG before validation rules are built, maps missing-profile errors to 422. See [hapi/README.md](hapi/README.md) |
 | `igs/` | The pinned IG package (the contract) |
 | `openhim/` | Channel definitions and console configuration |
 | `keycloak/` | Realm (`bonolo-repository`: roles, clients, demo users) and the `bonolo` login theme with the Ministry of Health logo |
 | `portal/` | Admin portal: Node/Fastify server and React UI. See [portal/README.md](portal/README.md) |
 | `postman/` | End-to-end collection: reference data, publication, CDU pull and status, access control, contract rejections, cancellation and correction scenarios |
-| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh` |
+| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh`; for servers `new-env.sh` and `backup.sh` |
 
 ## Common tasks
 
@@ -119,6 +122,6 @@ Channels are defined in `openhim/channels.json`; client passwords come from `.en
 
 This stack is for demos and development:
 
-- **`.env` is committed with demo secrets.** Replace them before sharing the stack with anyone, and keep real passwords out of git.
+- **`.env.example` holds demo secrets.** A server gets its own random ones from `scripts/new-env.sh`. Keep real passwords out of git.
 - **Self-signed certificate:** the portal skips certificate checks on the OpenHIM API (`OPENHIM_API_INSECURE_TLS`). In production, mount the CA and set `OPENHIM_API_CA_FILE`.
-- **Keycloak** runs over plain HTTP on localhost. A real deployment needs HTTPS, real hostnames and an SMTP server for invitations and password reset.
+- **Keycloak** runs over plain HTTP on localhost. On a server it sits behind Caddy with HTTPS, and only its login pages are published ([DEPLOYMENT.md](DEPLOYMENT.md)).

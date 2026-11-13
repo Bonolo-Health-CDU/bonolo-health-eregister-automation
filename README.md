@@ -47,7 +47,7 @@ Then check the whole flow with the Postman collection:
 npx newman run postman/Bonolo_CDU_eRegister_FHIR_Repository.postman_collection.json --insecure
 ```
 
-On fresh volumes all 45 requests and 69 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
+On fresh volumes all 45 requests and 71 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
 
 Open http://localhost:3000 and sign in as one of the demo users created on Keycloak's first start:
 
@@ -61,13 +61,39 @@ Passwords are `PORTAL_DEMO_*_PASSWORD` in `.env`.
 
 ## How a prescription flows
 
-| Step | Who | What happens on the repository |
+Each prescription has one Task, which carries the CDU's progress in two fields: `Task.status` (the FHIR lifecycle) and `Task.businessStatus` (what the facility sees). The CDU writes them, and eRegister reads them back to update itself. The mapping from CDU workflow states is the Status Map tab of the data-mapping sheet.
+
+### When there are no issues
+
+| Step | Who | What happens on the repository | `status` / `businessStatus` |
+|---|---|---|---|
+| INT-01 Publish | eRegister | POSTs a transaction Bundle: Patient, MedicationRequest, Task owned by the CDU | `requested` / none |
+| INT-02 Pull | CDU | Searches `Task?owner=Organization/1-LESOTHO-CDU&status=requested` and claims each Task | `accepted` / `received` |
+| INT-03 Status | CDU | Production: batching, picking, dispensing, bagging and QA, boxing | `in-progress` / `in-preparation` |
+| | CDU | Packed, waiting for the delivery run | `in-progress` / `ready-for-dispatch` |
+| | CDU | Handed to Collect & Go | `in-progress` / `dispatched` |
+| | CDU | Collect & Go confirms the patient collected the parcel (code 12). The time goes in `Task.executionPeriod.end` | **`completed` / `collected`** |
+| INT-03 Read back | eRegister | Reads the Tasks of its open prescriptions and updates its own records (see below) | |
+
+### Other outcomes
+
+| Outcome | `status` / `businessStatus` | What happens next |
 |---|---|---|
-| INT-01 Publish | eRegister | POSTs a transaction Bundle: Patient, MedicationRequest, Task (`status = requested`, owned by the CDU) |
-| INT-02 Pull | CDU | Searches `Task?owner=Organization/1-LESOTHO-CDU&status=requested` and claims each Task (`accepted` / `received`) |
-| INT-03 Status | CDU | Updates the Task's `status` and `businessStatus` as the prescription moves through the CDU (Status Map in the data-mapping sheet) |
-| Return / resubmit | CDU, eRegister | CDU sets `rejected` / `returned-to-facility` with a reason; the facility amends the MedicationRequest and sets the Task back to `requested`. Postman folder 09 runs this, with or without Odoo (see the folder's description) |
-| Cancel | eRegister | Cancels the MedicationRequest and the Task |
+| Query | `on-hold` / `query-raised` | The CDU contacts the patient to resolve a detail |
+| Returned to facility | `rejected` / `returned-to-facility`, reason in `statusReason` | The facility amends the MedicationRequest and sets the Task back to `requested`. Postman folder 09 runs this, with or without Odoo (see the folder's description) |
+| Returned uncollected | `failed` / `uncollected-returned` | Collect & Go confirms the parcel is back at the CDU (code 11 or 16). Final |
+| Cancelled by eRegister | eRegister cancels the MedicationRequest and the Task | The CDU cancels its prescription automatically if production hasn't started; otherwise an admin decides |
+| Cancelled by the CDU | `cancelled` / `cancelled` | Final |
+
+### How eRegister reads the status back
+
+- **One prescription**, for the patient profile: `MedicationRequest?_id={id}&_revinclude=Task:focus`.
+- **Keeping up to date:** eRegister keeps the list of prescriptions it still considers open and asks for their Tasks by identifier, up to 50 per request (a comma means OR):
+  `Task?identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{order UUID},…&_count=50`
+- **Don't filter on status** (for example `status:not=completed`). A Task that completes drops out of such a search, so eRegister would never learn the parcel was collected.
+- An order leaves the open list once its Task is `completed`, `failed` or `cancelled`. Keep polling `rejected` and `on-hold` Tasks: they are waiting for the facility or the patient.
+
+Postman folder 05 runs both reads. Folder 04 also records a MedicationDispense (what was dispensed). Odoo doesn't publish one yet, and the FHIR contract doesn't define it: whether eRegister needs it is an open decision.
 
 On the CDU side this is implemented by the `cdu_eregister` Odoo module in the `bahmni-docker` repository (`bahmni-standard/extra-odoo-addons/cdu_eregister`). Postman folders 03–04 play the CDU's part. Don't use them while Odoo's automatic sync is on, or Odoo claims the Tasks first.
 

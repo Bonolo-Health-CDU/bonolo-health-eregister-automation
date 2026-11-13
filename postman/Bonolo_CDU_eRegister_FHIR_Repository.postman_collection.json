@@ -1318,7 +1318,7 @@
           ]
         },
         {
-          "name": "All open CDU prescriptions from my facility",
+          "name": "Status of my open prescriptions (batched)",
           "request": {
             "method": "GET",
             "header": [
@@ -1328,7 +1328,7 @@
               }
             ],
             "url": {
-              "raw": "{{base}}/Task?requester=Organization/A2681&status:not=completed&status:not=cancelled&_count=50",
+              "raw": "{{base}}/Task?identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}},http://fhir.health.gov.ls/sid/cdu-fulfilment-task|00000000-0000-4000-8000-000000000000&_count=50",
               "host": [
                 "{{base}}"
               ],
@@ -1337,16 +1337,8 @@
               ],
               "query": [
                 {
-                  "key": "requester",
-                  "value": "Organization/A2681"
-                },
-                {
-                  "key": "status:not",
-                  "value": "completed"
-                },
-                {
-                  "key": "status:not",
-                  "value": "cancelled"
+                  "key": "identifier",
+                  "value": "http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{{encounterUuid}},http://fhir.health.gov.ls/sid/cdu-fulfilment-task|00000000-0000-4000-8000-000000000000"
                 },
                 {
                   "key": "_count",
@@ -1354,7 +1346,7 @@
                 }
               ]
             },
-            "description": ""
+            "description": "How eRegister keeps its prescriptions up to date (INT-03, read side).\n\neRegister keeps the list of orders it still considers open and asks for their Tasks by identifier, up to 50 per request (a comma means OR). Here: this run's order, plus an order that does not exist, to show the pattern.\n\nA Task that has just finished is still returned, so eRegister sees the final status: `completed` / `collected` when the patient collected the parcel, with the time in `executionPeriod.end`. Do not filter on status (for example `status:not=completed`): a Task that completes drops out of such a search, and eRegister never learns it was collected.\n\nRemove an order from the open list once its Task is `completed`, `failed` or `cancelled`. Keep polling `rejected` and `on-hold` Tasks: they wait for the facility or the patient."
           },
           "event": [
             {
@@ -1362,7 +1354,17 @@
               "script": {
                 "type": "text/javascript",
                 "exec": [
-                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));"
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const tasks = (pm.response.json().entry || []).map(e => e.resource);",
+                  "const SYSTEM = 'http://fhir.health.gov.ls/sid/cdu-fulfilment-task';",
+                  "const orderOf = t => (t.identifier || []).find(i => i.system === SYSTEM).value;",
+                  "const asked = [pm.variables.get('encounterUuid'), '00000000-0000-4000-8000-000000000000'];",
+                  "pm.test('Only the Tasks asked for', () => tasks.forEach(t => pm.expect(asked).to.include(orderOf(t))));",
+                  "const mine = tasks.find(t => orderOf(t) === asked[0]);",
+                  "pm.test(\"This run's Task is returned, even when finished\", () => pm.expect(mine).to.exist);",
+                  "const FINAL = ['completed', 'failed', 'cancelled', 'entered-in-error'];",
+                  "tasks.forEach(t => console.log(orderOf(t), t.status, t.businessStatus && t.businessStatus.text,",
+                  "  FINAL.includes(t.status) ? '-> final: remove from the open list' : '-> keep polling'));"
                 ]
               }
             }

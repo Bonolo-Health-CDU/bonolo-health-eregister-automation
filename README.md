@@ -16,6 +16,22 @@ Admin browser ──► Portal :3000 ──(read-only)──► OpenHIM :5001
 - **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.2.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
 - **Synthetic data only.** Never load real patient data into this stack.
 
+## Documentation
+
+| You are | Start with |
+|---|---|
+| Building the eRegister side | The guide's [Exchange workflow](https://bonolo-health-cdu.github.io/bonolo-cdu-fhir-ig/exchange.html) page, then [How a prescription flows](#how-a-prescription-flows) and the Postman collection in `postman/` |
+| Building the CDU side (Odoo) | The [bahmni-docker](https://github.com/Bonolo-Health-CDU/bahmni-docker) README, which links each CDU module; the exchange itself is in its `cdu_eregister` module |
+| Running this stack | [Quick start](#quick-start), then [hapi/README.md](hapi/README.md) (contract validation) and [portal/README.md](portal/README.md) |
+
+### Related repositories
+
+| Repository | What it holds |
+|---|---|
+| [bonolo-cdu-fhir-ig](https://github.com/Bonolo-Health-CDU/bonolo-cdu-fhir-ig) | The FHIR contract between eRegister and the CDU: profiles, code lists and status values. Browse it at https://bonolo-health-cdu.github.io/bonolo-cdu-fhir-ig/ |
+| bonolo-health-eregister-automation (this one) | The prescription repository that sits between them (HAPI FHIR, OpenHIM, Keycloak, the portal) and the Postman tests |
+| [bahmni-docker](https://github.com/Bonolo-Health-CDU/bahmni-docker) | The CDU in Odoo (prescription workflow, eLMIS, Collect & Go, the eRegister client) and the print agent |
+
 ## Services
 
 | Service | URL | Purpose |

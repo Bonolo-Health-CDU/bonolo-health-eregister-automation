@@ -13,7 +13,7 @@ Admin browser ──► Portal :3000 ──(read-only)──► OpenHIM :5001
 ```
 
 - **OpenHIM is the only door.** Every client (eRegister, CDU, registry, portal) signs in to OpenHIM, which decides per channel what it may do and logs every request.
-- **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.2.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
+- **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.3.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
 - **Synthetic data only.** Never load real patient data into this stack.
 
 ## Documentation
@@ -110,14 +110,14 @@ Channels are defined in `openhim/channels.json`; client passwords come from `.en
 | `keycloak/` | Realm (`bonolo-repository`: roles, clients, demo users) and the `bonolo` login theme with the Ministry of Health logo |
 | `portal/` | Admin portal: Node/Fastify server and React UI. See [portal/README.md](portal/README.md) |
 | `postman/` | End-to-end collection: reference data, publication, CDU pull and status, access control, contract rejections, cancellation and correction scenarios |
-| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh` |
+| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh`, `remove-old-contract.sh` (after a contract upgrade) |
 
 ## Common tasks
 
 | Task | How |
 |---|---|
 | Start from empty data | `docker compose down -v && docker compose up -d && ./scripts/setup-openhim.sh && ./scripts/setup-keycloak.sh`. This deletes all FHIR, OpenHIM and Keycloak data, including portal users. |
-| Update the contract | Build the package in `bonolo-cdu-fhir-ig` (`./scripts/package.sh`), copy the tgz into `igs/`, update `version` and `packageUrl` in `hapi/application-bonolo.yaml`, then reset the data. |
+| Update the contract | Build the package in `bonolo-cdu-fhir-ig` (`./scripts/package.sh`), copy the tgz into `igs/` and update `version` and `packageUrl` in `hapi/application-bonolo.yaml`. Then restart `hapi-fhir` and remove the previous version's definitions; no data reset is needed. Steps: [hapi/README.md › Upgrading the contract](hapi/README.md#upgrading-the-contract). |
 | Rebuild HAPI after Java changes | `docker compose build hapi-fhir && docker compose up -d hapi-fhir` |
 | Rebuild the portal | `docker compose up -d --build portal` |
 | Portal tests | `cd portal/server && npm install && npm test` |

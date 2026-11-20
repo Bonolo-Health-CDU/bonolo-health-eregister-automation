@@ -245,6 +245,8 @@ docker compose up -d --build
 
 Keycloak imports `keycloak/bonolo-repository-realm.json` only on its very first start. Later changes to that file have to be made in the admin console.
 
+**When the update changes the contract version** (a new tgz in `igs/`), HAPI installs the new version alongside the old one. Once its log shows `Finished installation of package`, remove the old version's definitions with `./scripts/remove-old-contract.sh <old-version>`: a dry run first, then `--delete`. No data reset is needed. See [hapi/README.md › Upgrading the contract](hapi/README.md#upgrading-the-contract).
+
 ## Troubleshooting
 
 - **No certificate (browser warning, or Caddy logs `challenge failed`).** Check the following, then run `docker compose restart caddy`:

@@ -13,9 +13,25 @@ Admin browser ──► Portal :3000 ──(read-only)──► OpenHIM :5001
 ```
 
 - **OpenHIM is the only door.** Every client (eRegister, CDU, registry, portal) signs in to OpenHIM, which decides per channel what it may do and logs every request.
-- **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.2.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
+- **The contract is enforced by HAPI.** It installs the pinned implementation guide `ls.moh.bonolo.cdu` 0.3.0 (`igs/`) and rejects Patient, MedicationRequest and Task writes that don't conform. The IG and the agreed identifiers (`NAMING.md`) live in the `bonolo-cdu-fhir-ig` repository.
 - **Synthetic data only.** Never load real patient data into this stack.
 - **On a server** with real hostnames and HTTPS, follow [DEPLOYMENT.md](DEPLOYMENT.md) instead of the quick start below.
+
+## Documentation
+
+| You are | Start with |
+|---|---|
+| Building the eRegister side | The guide's [Exchange workflow](https://bonolo-health-cdu.github.io/bonolo-cdu-fhir-ig/exchange.html) page, then [How a prescription flows](#how-a-prescription-flows) and the Postman collection in `postman/` |
+| Building the CDU side (Odoo) | The [bahmni-docker](https://github.com/Bonolo-Health-CDU/bahmni-docker) README, which links each CDU module; the exchange itself is in its `cdu_eregister` module |
+| Running this stack | [Quick start](#quick-start), then [hapi/README.md](hapi/README.md) (contract validation) and [portal/README.md](portal/README.md) |
+
+### Related repositories
+
+| Repository | What it holds |
+|---|---|
+| [bonolo-cdu-fhir-ig](https://github.com/Bonolo-Health-CDU/bonolo-cdu-fhir-ig) | The FHIR contract between eRegister and the CDU: profiles, code lists and status values. Browse it at https://bonolo-health-cdu.github.io/bonolo-cdu-fhir-ig/ |
+| bonolo-health-eregister-automation (this one) | The prescription repository that sits between them (HAPI FHIR, OpenHIM, Keycloak, the portal) and the Postman tests |
+| [bahmni-docker](https://github.com/Bonolo-Health-CDU/bahmni-docker) | The CDU in Odoo (prescription workflow, eLMIS, Collect & Go, the eRegister client) and the print agent |
 
 ## Services
 
@@ -49,7 +65,7 @@ Then check the whole flow with the Postman collection:
 npx newman run postman/Bonolo_CDU_eRegister_FHIR_Repository.postman_collection.json --insecure
 ```
 
-On fresh volumes all 45 requests and 69 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
+On fresh volumes all 45 requests and 71 assertions pass. Folders 06 and 08 *expect* failures: access refused (401) and contract rejections (422).
 
 Open http://localhost:3000 and sign in as one of the demo users created on Keycloak's first start:
 
@@ -63,13 +79,39 @@ Passwords are `PORTAL_DEMO_*_PASSWORD` in `.env`.
 
 ## How a prescription flows
 
-| Step | Who | What happens on the repository |
+Each prescription has one Task, which carries the CDU's progress in two fields: `Task.status` (the FHIR lifecycle) and `Task.businessStatus` (what the facility sees). The CDU writes them, and eRegister reads them back to update itself. The mapping from CDU workflow states is the Status Map tab of the data-mapping sheet.
+
+### When there are no issues
+
+| Step | Who | What happens on the repository | `status` / `businessStatus` |
+|---|---|---|---|
+| INT-01 Publish | eRegister | POSTs a transaction Bundle: Patient, MedicationRequest, Task owned by the CDU | `requested` / none |
+| INT-02 Pull | CDU | Searches `Task?owner=Organization/1-LESOTHO-CDU&status=requested` and claims each Task | `accepted` / `received` |
+| INT-03 Status | CDU | Production: batching, picking, dispensing, bagging and QA, boxing | `in-progress` / `in-preparation` |
+| | CDU | Packed, waiting for the delivery run | `in-progress` / `ready-for-dispatch` |
+| | CDU | Handed to Collect & Go | `in-progress` / `dispatched` |
+| | CDU | Collect & Go confirms the patient collected the parcel (code 12). The time goes in `Task.executionPeriod.end` | **`completed` / `collected`** |
+| INT-03 Read back | eRegister | Reads the Tasks of its open prescriptions and updates its own records (see below) | |
+
+### Other outcomes
+
+| Outcome | `status` / `businessStatus` | What happens next |
 |---|---|---|
-| INT-01 Publish | eRegister | POSTs a transaction Bundle: Patient, MedicationRequest, Task (`status = requested`, owned by the CDU) |
-| INT-02 Pull | CDU | Searches `Task?owner=Organization/1-LESOTHO-CDU&status=requested` and claims each Task (`accepted` / `received`) |
-| INT-03 Status | CDU | Updates the Task's `status` and `businessStatus` as the prescription moves through the CDU (Status Map in the data-mapping sheet) |
-| Return / resubmit | CDU, eRegister | CDU sets `rejected` / `returned-to-facility` with a reason; the facility amends the MedicationRequest and sets the Task back to `requested`. Postman folder 09 runs this, with or without Odoo (see the folder's description) |
-| Cancel | eRegister | Cancels the MedicationRequest and the Task |
+| Query | `on-hold` / `query-raised` | The CDU contacts the patient to resolve a detail |
+| Returned to facility | `rejected` / `returned-to-facility`, reason in `statusReason` | The facility amends the MedicationRequest and sets the Task back to `requested`. Postman folder 09 runs this, with or without Odoo (see the folder's description) |
+| Returned uncollected | `failed` / `uncollected-returned` | Collect & Go confirms the parcel is back at the CDU (code 11 or 16). Final |
+| Cancelled by eRegister | eRegister cancels the MedicationRequest and the Task | The CDU cancels its prescription automatically if production hasn't started; otherwise an admin decides |
+| Cancelled by the CDU | `cancelled` / `cancelled` | Final |
+
+### How eRegister reads the status back
+
+- **One prescription**, for the patient profile: `MedicationRequest?_id={id}&_revinclude=Task:focus`.
+- **Keeping up to date:** eRegister keeps the list of prescriptions it still considers open and asks for their Tasks by identifier, up to 50 per request (a comma means OR):
+  `Task?identifier=http://fhir.health.gov.ls/sid/cdu-fulfilment-task|{order UUID},…&_count=50`
+- **Don't filter on status** (for example `status:not=completed`). A Task that completes drops out of such a search, so eRegister would never learn the parcel was collected.
+- An order leaves the open list once its Task is `completed`, `failed` or `cancelled`. Keep polling `rejected` and `on-hold` Tasks: they are waiting for the facility or the patient.
+
+Postman folder 05 runs both reads. Folder 04 also records a MedicationDispense (what was dispensed). Odoo doesn't publish one yet, and the FHIR contract doesn't define it: whether eRegister needs it is an open decision.
 
 On the CDU side this is implemented by the `cdu_eregister` Odoo module in the `bahmni-docker` repository (`bahmni-standard/extra-odoo-addons/cdu_eregister`). Postman folders 03–04 play the CDU's part. Don't use them while Odoo's automatic sync is on, or Odoo claims the Tasks first.
 
@@ -97,14 +139,14 @@ Channels are defined in `openhim/channels.json`; client passwords come from `.en
 | `keycloak/` | Realm (`bonolo-repository`: roles, clients, demo users) and the `bonolo` login theme with the Ministry of Health logo |
 | `portal/` | Admin portal: Node/Fastify server and React UI. See [portal/README.md](portal/README.md) |
 | `postman/` | End-to-end collection: reference data, publication, CDU pull and status, access control, contract rejections, cancellation and correction scenarios |
-| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh`; for servers `new-env.sh` and `backup.sh` |
+| `scripts/` | `setup-openhim.sh`, `setup-keycloak.sh`, `wait-for-hapi.sh`, `remove-old-contract.sh` (after a contract upgrade); for servers `new-env.sh` and `backup.sh` |
 
 ## Common tasks
 
 | Task | How |
 |---|---|
 | Start from empty data | `docker compose down -v && docker compose up -d && ./scripts/setup-openhim.sh && ./scripts/setup-keycloak.sh`. This deletes all FHIR, OpenHIM and Keycloak data, including portal users. |
-| Update the contract | Build the package in `bonolo-cdu-fhir-ig` (`./scripts/package.sh`), copy the tgz into `igs/`, update `version` and `packageUrl` in `hapi/application-bonolo.yaml`, then reset the data. |
+| Update the contract | Build the package in `bonolo-cdu-fhir-ig` (`./scripts/package.sh`), copy the tgz into `igs/` and update `version` and `packageUrl` in `hapi/application-bonolo.yaml`. Then restart `hapi-fhir` and remove the previous version's definitions; no data reset is needed. Steps: [hapi/README.md › Upgrading the contract](hapi/README.md#upgrading-the-contract). |
 | Rebuild HAPI after Java changes | `docker compose build hapi-fhir && docker compose up -d hapi-fhir` |
 | Rebuild the portal | `docker compose up -d --build portal` |
 | Portal tests | `cd portal/server && npm install && npm test` |

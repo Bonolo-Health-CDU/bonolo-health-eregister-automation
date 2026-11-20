@@ -11,9 +11,11 @@ realm=bonolo-repository
 client=repository-portal-admin
 kc() { docker compose exec -T keycloak /opt/keycloak/bin/kcadm.sh "$@"; }
 
-echo "Signing in to Keycloak as the bootstrap admin ..."
+# The bootstrap admin, or the permanent admin that replaced it (DEPLOYMENT.md).
+admin_user=${KEYCLOAK_ADMIN_USER:-admin}
+echo "Signing in to Keycloak as $admin_user ..."
 kc config credentials --server http://localhost:8080 --realm master \
-  --user admin --password "$KEYCLOAK_ADMIN_PASSWORD" >/dev/null 2>&1
+  --user "$admin_user" --password "$KEYCLOAK_ADMIN_PASSWORD" >/dev/null 2>&1
 
 id=$(kc get clients -r "$realm" -q clientId="$client" --fields id --format csv --noquotes | tr -d '\r')
 settings=(-s enabled=true -s publicClient=false -s serviceAccountsEnabled=true
@@ -37,4 +39,10 @@ echo "  service account roles: view-users, query-users, manage-users"
 # acted), and the login theme with the Ministry of Health logo.
 kc update "realms/$realm" -s adminEventsEnabled=true -s adminEventsDetailsEnabled=true -s loginTheme=bonolo
 echo "  admin events enabled, login theme: bonolo"
+
+# The admin console and the master realm are never published. On a server
+# they are reached through an SSH tunnel to port 8180, so the master realm's
+# login pages must use that address rather than the public one.
+kc update realms/master -s attributes.frontendUrl=http://localhost:8180
+echo "  master realm (admin console): http://localhost:8180"
 echo "Done."

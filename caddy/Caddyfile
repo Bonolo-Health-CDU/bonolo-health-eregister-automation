@@ -1,0 +1,45 @@
+# Public entry points of a server install (docker-compose.prod.yml).
+# Hostnames and the e-mail for certificate notices come from .env.
+# Certificates are obtained from Let's Encrypt and renewed automatically.
+{
+	email {$ACME_EMAIL}
+	{$CADDY_GLOBAL_OPTIONS}
+}
+
+(hsts) {
+	header Strict-Transport-Security "max-age=31536000"
+}
+
+# FHIR API for eRegister and the CDU. OpenHIM authenticates every client,
+# applies the channel rules and logs the request.
+{$FHIR_HOST} {
+	import hsts
+	handle /fhir* {
+		reverse_proxy openhim-core:5001
+	}
+	handle {
+		respond 404
+	}
+}
+
+{$PORTAL_HOST} {
+	import hsts
+	reverse_proxy portal:3000
+}
+
+# Keycloak: only what portal users' browsers need, i.e. the bonolo-repository
+# login pages and their resources. The admin console and the master realm
+# are reached through an SSH tunnel instead (DEPLOYMENT.md).
+{$AUTH_HOST} {
+	import hsts
+	@public {
+		path /realms/* /resources/*
+		not path /realms/master/*
+	}
+	handle @public {
+		reverse_proxy keycloak:8080
+	}
+	handle {
+		respond 404
+	}
+}

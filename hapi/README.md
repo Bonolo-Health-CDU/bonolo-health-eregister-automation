@@ -7,8 +7,8 @@ Compose mounts the package and additional configuration read-only. `SPRING_CONFI
 | Property | Setting | Exact release source |
 |---|---|---|
 | `hapi.fhir.implementationguides.bonolo.name` | `ls.moh.bonolo.cdu` | [application.yaml:200](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L200) |
-| `hapi.fhir.implementationguides.bonolo.version` | `0.2.0` | [application.yaml:201](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L201) |
-| `hapi.fhir.implementationguides.bonolo.packageUrl` | `file:/app/igs/ls.moh.bonolo.cdu-0.2.0.tgz` | [application.yaml:205](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L205) |
+| `hapi.fhir.implementationguides.bonolo.version` | `0.3.0` | [application.yaml:201](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L201) |
+| `hapi.fhir.implementationguides.bonolo.packageUrl` | `file:/app/igs/ls.moh.bonolo.cdu-0.3.0.tgz` | [application.yaml:205](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L205) |
 | `hapi.fhir.implementationguides.bonolo.installMode` | `STORE_AND_INSTALL` | [application.yaml:203](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L203) |
 | `hapi.fhir.implementationguides.bonolo.reloadExisting` | `false` | [application.yaml:202](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L202) |
 | `hapi.fhir.validation.requests_enabled` | `true` | [application.yaml:335](https://github.com/hapifhir/hapi-fhir-jpaserver-starter/blob/a01027b91ed07f41194524fd0dd59623905cbe2d/src/main/resources/application.yaml#L335) |
@@ -41,6 +41,48 @@ Hook source: [HAPI 8.12.0 Pointcut.java](https://github.com/hapifhir/hapi-fhir/b
 ## Package and examples
 
 Build the contract in the sibling IG repository with `./scripts/package.sh`, then copy its versioned tgz into `igs/`. The committed tgz is the contract pin. It contains 17 conformance resources at package root and eight examples in `package/example/`. Do not configure `additionalResourceFolders: [example]`: these fixtures must never be installed into the repository.
+
+## Upgrading the contract
+
+A new contract version can be installed on a running repository. Prescriptions, Tasks and reference data are kept.
+
+HAPI installs the new package **alongside** the old one rather than replacing it, so each definition then exists twice, once per version. Validation uses the copy stored most recently, which is the new one. `scripts/remove-old-contract.sh` removes the old copies so that each canonical URL resolves to exactly one definition.
+
+From the repository root (on a server, in `/opt/cdu-fhir-repo`):
+
+```sh
+# 1. Back up the FHIR database
+docker compose exec -T hapi-db pg_dump -U hapi -Fc hapi > hapi-$(date +%F).dump
+
+# 2. Pull the change that adds the new tgz to igs/ and updates application-bonolo.yaml, then restart HAPI
+git pull
+docker compose restart hapi-fhir
+docker compose logs -f hapi-fhir      # wait for "Finished installation of package ls.moh.bonolo.cdu#<new>"
+
+# 3. Remove the previous version's definitions: a dry run first, then --delete
+./scripts/remove-old-contract.sh 0.2.0
+./scripts/remove-old-contract.sh 0.2.0 --delete
+```
+
+The script deletes only Bonolo StructureDefinitions, ValueSets and CodeSystems of the given version, and only when the configured version has a replacement for each one. It never touches Patient, MedicationRequest or Task data. It talks to HAPI directly (`HAPI`, default `http://localhost:8095/fhir`), which on a server listens on `127.0.0.1` only.
+
+To roll back, restore the dump into an empty `hapi` database with `pg_restore` while `hapi-fhir` is stopped, and check out the previous commit.
+
+**Prescriptions already stored keep the regimen code they were sent with**, even if the new version no longer lists that code. Validation runs on writes, so the next update to such a prescription has to use a current code.
+
+### Verified: 0.2.0 → 0.3.0 on a stack with data
+
+1. Restored a FHIR database holding contract 0.2.0 and five synthetic prescriptions. Switched the configuration to 0.3.0 and restarted `hapi-fhir`. Startup logged `Finished installation of package ls.moh.bonolo.cdu#0.3.0`, creating 7 StructureDefinitions, 5 ValueSets and 5 CodeSystems next to the 0.2.0 ones.
+2. With both versions stored, writes through OpenHIM as `eregister`:
+   - a MedicationRequest with regimen `1k` was accepted (201);
+   - one with `1f`, removed in 0.3.0, was rejected (422).
+3. `remove-old-contract.sh`:
+   - refused to remove the version in use;
+   - listed the 17 version 0.2.0 definitions in a dry run, then deleted them;
+   - a second run found nothing to do.
+4. Only 0.3.0 definitions remained, and a restart kept it that way.
+5. All five prescriptions were still present.
+6. Newman: 45 requests and 69 assertions, all passed.
 
 ## Request body changes
 
